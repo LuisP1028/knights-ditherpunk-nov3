@@ -1,0 +1,3 @@
+wayfinder/20261104T011759-860-audv/visual-taste-direction.md
+assets/20261104T011759-860-audv/planner-2.5-ditherpunk-hud-prototype-desktop.png
+assets/20261104T011759-860-audv/planner-2.5-ditherpunk-hud-prototype-mobile.png
