@@ -1,0 +1,29 @@
+# Runtime & Libraries Assessment (`libs-installed.txt`)
+# Run ID: 20261104T011759-860-audv
+# Agent: library-installer
+# Target: function-mapper, plan-1
+
+[Runtime Environment]
+Node.js: v24.9.0 (/opt/homebrew/bin/node)
+npm: 11.6.0 (/opt/homebrew/bin/npm)
+Python: 3.12.7 (/opt/homebrew/bin/python3)
+Git: 2.50.1 (/opt/homebrew/bin/git)
+Shell: /bin/zsh, /bin/bash
+
+[Node Package Manifest: package.json]
+Project Type: ECMAScript Modules ("type": "module")
+Dependencies: None (Zero runtime external dependencies; satisfies Section 5 operational budget)
+devDependencies:
+  - @ai-hero/sandcastle: ^0.12.0 (Installed in node_modules)
+
+[Runtime Architecture & Zero-External-Dependency Contract]
+1. `src/atkinson_dither_engine.mjs`: Pure Node.js & browser standard typed arrays (`Float32Array`, `Int16Array`, `Uint32Array`). Zero external libraries required.
+2. `src/knight_heraldry.mjs`: Pure programmatic procedural 2D luminance rasterization and SVG string generation. Zero external libraries required.
+3. `src/civic_store.mjs`: Pure JS in-memory store with browser localStorage integration and FNV-1a checksum calculation. Zero external libraries required.
+4. `src/hud_controller.mjs`: Pure JS date/time calculations, countdown logic, and DOM telemetry updates. Zero external libraries required.
+5. `src/verify.mjs`: Pure Node.js CLI script using native `node:fs`, `node:path`, `node:performance`. Verifies all invariants in <= 250 ms. Zero external packages required.
+6. `index.html` & `styles/ditherpunk_hud.css`: Standalone HTML5 and CSS3 using native browser `<canvas>` 2D context. Zero external CDN links or frameworks.
+
+[Verification Command]
+Command: `npm run verify` -> `node src/verify.mjs --verify`
+Status: Fully operational runtime environment.
