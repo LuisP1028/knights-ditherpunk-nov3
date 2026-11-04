@@ -1251,9 +1251,9 @@ export function createCivicStore(arg1 = {}, arg2 = {}) {
         if (incoming.checksum !== recomputedChecksum) return;
 
         const incomingRev = Number.isInteger(incoming.revision) ? incoming.revision : 0;
-        if (incomingRev < currentSnapshot.revision) return;
+        const isIncomingNewerOrEqual = incomingRev >= currentSnapshot.revision;
 
-        // CRDT Set-Union for completed readiness steps and minted seal
+        // CRDT Set-Union for completed readiness steps and minted seal (never drop completed steps across tabs)
         const mergedStepsSet = new Set([
           ...currentSnapshot.completedSteps,
           ...incomingCore.completedSteps
@@ -1263,15 +1263,20 @@ export function createCivicStore(arg1 = {}, arg2 = {}) {
           currentSnapshot.crestConfig.sealMinted || incomingCore.crestConfig.sealMinted
         );
 
+        const baseCore = isIncomingNewerOrEqual ? incomingCore : currentSnapshot;
         const mergedCore = {
-          ...incomingCore,
+          ...baseCore,
           completedSteps: mergedSteps,
           crestConfig: {
-            ...incomingCore.crestConfig,
+            ...baseCore.crestConfig,
             sealMinted: mergedSealMinted,
             mintedAtIso:
               incomingCore.crestConfig.mintedAtIso ||
               currentSnapshot.crestConfig.mintedAtIso ||
+              (mergedSealMinted ? new Date().toISOString() : null),
+            mintedAt:
+              incomingCore.crestConfig.mintedAt ||
+              currentSnapshot.crestConfig.mintedAt ||
               (mergedSealMinted ? new Date().toISOString() : null)
           }
         };
@@ -1279,8 +1284,10 @@ export function createCivicStore(arg1 = {}, arg2 = {}) {
         currentSnapshot = buildSnapshotEnvelope(
           mergedCore,
           {
-            revision: Math.max(currentSnapshot.revision, incomingRev),
-            lastSavedIso: incoming.lastSavedIso || new Date().toISOString(),
+            revision: Math.max(currentSnapshot.revision, incomingRev) + (isIncomingNewerOrEqual ? 0 : 1),
+            lastSavedIso: isIncomingNewerOrEqual
+              ? (incoming.lastSavedIso || new Date().toISOString())
+              : currentSnapshot.lastSavedIso,
             storageMode
           },
           dataset
