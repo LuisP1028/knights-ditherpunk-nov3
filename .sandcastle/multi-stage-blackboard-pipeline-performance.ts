@@ -159,6 +159,7 @@ export const REQUIRED_SANDCASTLE_FILES = [
 ] as const;
 
 const TRANSIENT_CACHE_NAMES = new Set([
+    "node_modules",
     "__pycache__",
     ".pytest_cache",
     ".mypy_cache",
@@ -1681,7 +1682,7 @@ export function cleanTransientWorktreeArtifacts(dir: string): void {
     }
 
     if (existsSync(join(dir, ".git"))) {
-        ignoreMissing(["git", "rm", "-rf", "--cached", "--ignore-unmatch", "--", "logs", ".playwright-mcp"], dir);
+        ignoreMissing(["git", "rm", "-rf", "--cached", "--ignore-unmatch", "--", "logs", ".playwright-mcp", "node_modules"], dir);
         ignoreMissing(["git", "clean", "-fd", "--", "logs", ".playwright-mcp"], dir);
     }
 }
@@ -1705,7 +1706,7 @@ export function commitLeftovers(dir: string, branch: string, stageName = "stage"
         });
     if (meaningfulLines.length === 0) return false;
     execFileSync("git", ["add", "-A"], { cwd: dir, stdio: "inherit" });
-    ignoreMissing(["git", "rm", "-rf", "--cached", "--ignore-unmatch", "--", "logs", ".playwright-mcp"], dir);
+    ignoreMissing(["git", "rm", "-rf", "--cached", "--ignore-unmatch", "--", "logs", ".playwright-mcp", "node_modules"], dir);
     try {
         execFileSync("git", ["diff", "--cached", "--quiet"], { cwd: dir, stdio: "ignore" });
         return false;

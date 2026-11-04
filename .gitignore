@@ -1,4 +1,5 @@
-# Node dependencies
+# Node dependencies (both symlink and directory forms)
+node_modules
 node_modules/
 
 # Python caches & test artifacts
