@@ -807,13 +807,32 @@
         dataset = DEFAULT_ELECTION_DATASET;
       }
 
+      const safeKnightHeraldry = {
+        ...knightHeraldry,
+        renderVotedCrestToCanvas(canvas, config, engine) {
+          const res = knightHeraldry.renderVotedCrestToCanvas(canvas, config, engine);
+          const rgba = res?.rgba || canvas?.lastRenderResult?.rgba;
+          const w = Number(canvas?.width) || 360;
+          const h = Number(canvas?.height) || 360;
+          if (canvas && rgba && typeof canvas.getContext === 'function') {
+            const ctx = canvas.getContext('2d');
+            if (ctx && typeof ctx.createImageData === 'function' && typeof ctx.putImageData === 'function') {
+              const imgData = ctx.createImageData(w, h);
+              imgData.data.set(rgba);
+              ctx.putImageData(imgData, 0, 0);
+            }
+          }
+          return res;
+        }
+      };
+
       const store = createCivicStore({}, { dataset });
       window.__CIVIC_AEGIS_APP__ = initHudController({
         rootElement: document.getElementById('app-root') || document.body,
         rootDocument: document,
         store,
         ditherEngine,
-        knightHeraldry,
+        knightHeraldry: safeKnightHeraldry,
         dataset
       });
     }
