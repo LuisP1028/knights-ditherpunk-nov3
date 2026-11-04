@@ -776,17 +776,36 @@ export function initHudController(options = {}) {
   const canvasImageDataCache = new WeakMap();
 
   const q = (selector) => {
-    if (!root || typeof root.querySelector !== 'function') return null;
-    return root.querySelector(selector) || (doc && doc !== root ? doc.querySelector(selector) : null);
+    if (root && typeof root.querySelector === 'function') {
+      const found = root.querySelector(selector);
+      if (found) return found;
+    }
+    if (doc && doc !== root && typeof doc.querySelector === 'function') {
+      return doc.querySelector(selector);
+    }
+    return null;
   };
 
   const qa = (selector) => {
-    if (!root || typeof root.querySelectorAll !== 'function') return [];
-    const list = root.querySelectorAll(selector);
-    if (list && list.length > 0) return Array.from(list);
-    return doc && doc !== root && typeof doc.querySelectorAll === 'function'
-      ? Array.from(doc.querySelectorAll(selector))
-      : [];
+    const results = [];
+    const seen = new Set();
+    if (root && typeof root.querySelectorAll === 'function') {
+      for (const el of root.querySelectorAll(selector)) {
+        if (!seen.has(el)) {
+          seen.add(el);
+          results.push(el);
+        }
+      }
+    }
+    if (doc && doc !== root && typeof doc.querySelectorAll === 'function') {
+      for (const el of doc.querySelectorAll(selector)) {
+        if (!seen.has(el)) {
+          seen.add(el);
+          results.push(el);
+        }
+      }
+    }
+    return results;
   };
 
   /**
@@ -808,27 +827,37 @@ export function initHudController(options = {}) {
   function injectHeraldicSvgOrnaments() {
     if (!doc) return;
     const archContainer = q('#hero-gothic-arch-svg');
-    if (archContainer && !archContainer.dataset.hydratedSvg && !archContainer.querySelector('svg')) {
+    if (archContainer && !archContainer.dataset?.hydratedSvg && !archContainer.querySelector?.('svg')) {
       archContainer.innerHTML = getArchSvg({
         title: 'ORDER OF THE CIVIC AEGIS',
         subtitle: 'NOVEMBER III BALLOT COMMAND // 2026-11-03'
       });
-      archContainer.dataset.hydratedSvg = 'true';
+      if (archContainer.dataset) archContainer.dataset.hydratedSvg = 'true';
     }
 
     for (const el of qa('[data-corner-filigree]')) {
-      if (!el.dataset.hydratedSvg) {
+      if (!el.dataset?.hydratedSvg) {
         const corner = el.getAttribute('data-corner-filigree') || 'top-left';
         el.innerHTML = getCornerSvg(corner, { size: 36 });
-        el.dataset.hydratedSvg = 'true';
+        if (el.dataset) el.dataset.hydratedSvg = 'true';
+      }
+    }
+
+    for (const el of qa('.section-filigree-corners, [data-filigree-target]')) {
+      if (!el.dataset?.hydratedSvg && (!el.children || el.children.length === 0)) {
+        const corners = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
+        el.innerHTML = corners
+          .map((c) => `<div class="corner-ornament ${c}">${getCornerSvg('top-left', { size: 36 })}</div>`)
+          .join('');
+        if (el.dataset) el.dataset.hydratedSvg = 'true';
       }
     }
 
     for (const el of qa('[data-order-shield], [data-shield-order]')) {
-      if (!el.dataset.hydratedSvg) {
+      if (!el.dataset?.hydratedSvg) {
         const orderId = el.getAttribute('data-order-shield') || el.getAttribute('data-shield-order') || 'order-1-recon';
         el.innerHTML = getShieldSvg(orderId, 56, 66);
-        el.dataset.hydratedSvg = 'true';
+        if (el.dataset) el.dataset.hydratedSvg = 'true';
       }
     }
   }
@@ -923,12 +952,12 @@ export function initHudController(options = {}) {
 
     const callsign = crest.callsign || 'KNIGHT OF PRECINCT 04';
     const orderId = crest.orderId || 'order-4-champion';
-    const kernel = crest.kernel || studio.kernel || 'atkinson-1bit';
-    const palette = crest.palette || studio.palette || 'obsidian-bone';
+    const kernel = studio.kernel || crest.kernel || 'atkinson-1bit';
+    const palette = studio.palette || crest.palette || 'obsidian-bone';
     const threshold = Number.isFinite(Number(studio.threshold)) ? Number(studio.threshold) : 128;
 
     if (typeof renderCrestCanvas === 'function') {
-      renderCrestCanvas(
+      const crestRes = renderCrestCanvas(
         crestCanvas,
         {
           callsign,
@@ -943,6 +972,22 @@ export function initHudController(options = {}) {
           applyPaletteToQuantized: applyPalette
         }
       );
+      if (crestRes?.rgba && typeof crestCanvas.getContext === 'function') {
+        const width = Number(crestCanvas.width) || 360;
+        const height = Number(crestCanvas.height) || 360;
+        const ctx = crestCanvas.getContext('2d');
+        if (ctx && typeof ctx.putImageData === 'function' && crestRes.rgba.length === width * height * 4) {
+          let imgData = canvasImageDataCache.get(crestCanvas);
+          if (!imgData || imgData.width !== width || imgData.height !== height) {
+            imgData = typeof ctx.createImageData === 'function'
+              ? ctx.createImageData(width, height)
+              : { width, height, data: new Uint8ClampedArray(width * height * 4) };
+            canvasImageDataCache.set(crestCanvas, imgData);
+          }
+          imgData.data.set(crestRes.rgba);
+          ctx.putImageData(imgData, 0, 0);
+        }
+      }
     } else {
       const width = Number(crestCanvas.width) || 360;
       const height = Number(crestCanvas.height) || 360;
@@ -1007,6 +1052,17 @@ export function initHudController(options = {}) {
       }
     };
 
+    const setPillStrongOrText = (selector, prefixText, strongText) => {
+      for (const el of qa(selector)) {
+        const strongEl = typeof el.querySelector === 'function' ? el.querySelector('strong') : null;
+        if (strongEl) {
+          strongEl.textContent = strongText;
+        } else {
+          el.textContent = `${prefixText}${strongText}`;
+        }
+      }
+    };
+
     // Top HUD bar pills & generic telemetry selectors
     setTxt('[data-hud-kernel], #hud-kernel-readout', readout.kernelReadout);
     setTxt('#hud-val-kernel', readout.kernelCode);
@@ -1018,9 +1074,9 @@ export function initHudController(options = {}) {
     setTxt('#hero-canvas-spec-readout', `320×240 // ${readout.kernelCode} (${readout.errorPropText} PROP)`);
 
     setTxt('[data-hud-readiness], #hud-val-readiness', `${readout.readinessPercentage}%`);
-    setTxt('#hud-readiness-progress', `GAUNTLET PROGRESS: ${readout.completedStepCount} / 5 (${readout.readinessPercentage}%)`);
+    setPillStrongOrText('#hud-readiness-progress', 'GAUNTLET PROGRESS: ', `${readout.completedStepCount} / 5 (${readout.readinessPercentage}%)`);
     setTxt('[data-hud-aegis-rank], #hud-val-rank', readout.aegisRank.toUpperCase());
-    setTxt('#hud-aegis-rank', `RANK: ${readout.aegisRank.toUpperCase()}`);
+    setPillStrongOrText('#hud-aegis-rank', 'RANK: ', readout.aegisRank.toUpperCase());
     setTxt('[data-hud-ballot-ratio], #hud-ballot-lock-ratio, #hud-val-ballot', readout.ballotLockRatio);
     setTxt('#hud-ballot-count-badge', `${readout.lockedContestsCount} / ${readout.totalContestsCount}`);
     setTxt('[data-hud-storage-mode], #hud-storage-mode, #hud-val-storage', readout.storageMode);
@@ -1067,6 +1123,16 @@ export function initHudController(options = {}) {
     if (pixelScaleSelect && String(pixelScaleSelect.value) !== String(studio.pixelScale ?? 1)) {
       pixelScaleSelect.value = String(studio.pixelScale ?? 1);
     }
+    for (const btn of qa('[data-pixel-scale]')) {
+      const isMatch = String(btn.getAttribute('data-pixel-scale')) === String(studio.pixelScale ?? 1);
+      btn.classList?.toggle('is-active', isMatch);
+      btn.setAttribute?.('aria-pressed', isMatch ? 'true' : 'false');
+    }
+
+    const lightSlider = q('#slider-light-angle');
+    if (lightSlider && String(lightSlider.value) !== String(Number(studio.lightAngle ?? 0.65).toFixed(2))) {
+      lightSlider.value = String(Number(studio.lightAngle ?? 0.65).toFixed(2));
+    }
 
     const lightBtn = q('#btn-toggle-light');
     if (lightBtn) {
@@ -1108,11 +1174,21 @@ export function initHudController(options = {}) {
       statusSpan.textContent = `CHOICE: ${choice}`;
     }
 
-    // Sync Crest Studio status
+    // Sync Crest Studio inputs & status
     const callsignText = crest.callsign || 'KNIGHT OF PRECINCT 04';
-    setTxt(
+    const callsignInput = q('#input-crest-callsign');
+    if (callsignInput && doc.activeElement !== callsignInput && callsignInput.value !== callsignText) {
+      callsignInput.value = callsignText;
+    }
+    const crestOrderSelect = q('#select-crest-order');
+    if (crestOrderSelect && crest.orderId && crestOrderSelect.value !== crest.orderId) {
+      crestOrderSelect.value = crest.orderId;
+    }
+
+    setPillStrongOrText(
       '#crest-mint-status, [data-crest-mint-status], #hud-crest-seal-status',
-      crest.sealMinted ? `SEAL STATUS: MINTED (${callsignText})` : 'SEAL STATUS: READY TO MINT'
+      'SEAL STATUS: ',
+      crest.sealMinted ? `MINTED (${callsignText})` : 'READY TO MINT'
     );
     setTxt(
       '#crest-status-readout',
@@ -1277,9 +1353,18 @@ export function initHudController(options = {}) {
     bind(heroCanvas, 'mousemove', (e) => {
       if (!reticleReadout || !heroCanvas.getBoundingClientRect) return;
       const rect = heroCanvas.getBoundingClientRect();
-      const relX = Math.max(0, Math.min(heroCanvas.width - 1, Math.floor(((e.clientX - rect.left) / Math.max(1, rect.width)) * heroCanvas.width)));
-      const relY = Math.max(0, Math.min(heroCanvas.height - 1, Math.floor(((e.clientY - rect.top) / Math.max(1, rect.height)) * heroCanvas.height)));
-      reticleReadout.textContent = `RETICLE: X=${String(relX).padStart(3, '0')} Y=${String(relY).padStart(3, '0')} // ATKINSON_6x1/8`;
+      const w = Number(heroCanvas.width) || 320;
+      const h = Number(heroCanvas.height) || 240;
+      const relX = Math.max(0, Math.min(w - 1, Math.floor(((e.clientX - rect.left) / Math.max(1, rect.width)) * w)));
+      const relY = Math.max(0, Math.min(h - 1, Math.floor(((e.clientY - rect.top) / Math.max(1, rect.height)) * h)));
+      const studio = store.getState().ditherConfig || store.getState().studio || {};
+      const angleKey = Number(studio.lightAngle ?? 0.65).toFixed(2);
+      const cacheKey = `hero-guardian:${w}x${h}:${angleKey}:${String(visorOpen)}`;
+      const lumBuf = customHeroLuminance || luminanceCache.get(cacheKey);
+      const lumVal = lumBuf ? lumBuf[relY * w + relX] : 184;
+      const thresholdVal = Number(studio.threshold ?? 128);
+      const quantVal = lumVal >= thresholdVal ? 255 : 0;
+      reticleReadout.textContent = `RETICLE: X=${String(relX).padStart(3, '0')} Y=${String(relY).padStart(3, '0')} // LUM=${String(lumVal).padStart(3, '0')} // QUANT=${String(quantVal).padStart(3, '0')}`;
     });
 
     // 7. Custom Image Upload & Restore in Dither Forge
@@ -1316,17 +1401,24 @@ export function initHudController(options = {}) {
       renderAllCanvases();
     });
 
-    // 8. Timezone Card Selection
+    // 8. Timezone Card Selection (Click & Keyboard Enter/Space)
+    const selectZoneCard = (tzCard) => {
+      const zId = tzCard.getAttribute('data-zone-id');
+      if (zId && POLL_ZONE_IDS.includes(zId)) {
+        if (typeof store.setSelectedZone === 'function') {
+          store.setSelectedZone(zId);
+        } else if (typeof store.setZone === 'function') {
+          store.setZone(zId);
+        }
+        updateCountdowns();
+      }
+    };
     for (const tzCard of qa('[data-zone-id]')) {
-      bind(tzCard, 'click', () => {
-        const zId = tzCard.getAttribute('data-zone-id');
-        if (zId && POLL_ZONE_IDS.includes(zId)) {
-          if (typeof store.setSelectedZone === 'function') {
-            store.setSelectedZone(zId);
-          } else if (typeof store.setZone === 'function') {
-            store.setZone(zId);
-          }
-          updateCountdowns();
+      bind(tzCard, 'click', () => selectZoneCard(tzCard));
+      bind(tzCard, 'keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault?.();
+          selectZoneCard(tzCard);
         }
       });
     }

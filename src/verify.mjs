@@ -376,6 +376,112 @@ function verifyHudController() {
   const mintRes = dispatchHudHotkey('v', store);
   assert.equal(mintRes.handled, true, 'Hotkey "v" must mint civic seal');
 
+  // 6. Verify fail-fast error boundaries on computePollCountdown
+  assert.throws(
+    () => computePollCountdown('not-an-iso-date', 'EST'),
+    TypeError,
+    'computePollCountdown must throw TypeError on invalid timestamp'
+  );
+  assert.throws(
+    () => computePollCountdown('2026-11-03T18:00:00.000Z', 'UNKNOWN_ZONE'),
+    RangeError,
+    'computePollCountdown must throw RangeError on unknown timezone code'
+  );
+
+  // 7. Verify initHudController end-to-end execution DAG & DOM controller lifecycle
+  const createSimCanvas = (w, h, scene) => {
+    let curW = w;
+    let curH = h;
+    let bitmap = new Uint8ClampedArray(w * h * 4);
+    return {
+      get width() {
+        return curW;
+      },
+      set width(val) {
+        curW = Number(val) || w;
+        bitmap = new Uint8ClampedArray(curW * curH * 4); // HTML5 Canvas spec: setting width clears bitmap
+      },
+      get height() {
+        return curH;
+      },
+      set height(val) {
+        curH = Number(val) || h;
+        bitmap = new Uint8ClampedArray(curW * curH * 4); // HTML5 Canvas spec: setting height clears bitmap
+      },
+      getAttribute(attr) {
+        return attr === 'data-scene' ? scene : null;
+      },
+      getContext() {
+        return {
+          createImageData(iw, ih) {
+            return { width: iw, height: ih, data: new Uint8ClampedArray(iw * ih * 4) };
+          },
+          putImageData(imgData) {
+            bitmap = new Uint8ClampedArray(imgData.data);
+          }
+        };
+      },
+      hasNonZeroPixels() {
+        for (let i = 0; i < bitmap.length; i += 4) {
+          if (bitmap[i] > 0 || bitmap[i + 1] > 0 || bitmap[i + 2] > 0) return true;
+        }
+        return false;
+      }
+    };
+  };
+
+  const simCanvases = {
+    '#canvas-hero-knight': createSimCanvas(80, 60, 'hero-guardian'),
+    '#canvas-order-1': createSimCanvas(60, 45, 'order-1-recon'),
+    '#canvas-order-2': createSimCanvas(60, 45, 'order-2-warrant'),
+    '#canvas-order-3': createSimCanvas(60, 45, 'order-3-queue'),
+    '#canvas-order-4': createSimCanvas(60, 45, 'order-4-champion'),
+    '#canvas-voted-crest': createSimCanvas(90, 90, null)
+  };
+  const filigreeBox = { children: [], innerHTML: '', dataset: {} };
+  const shieldBox = {
+    innerHTML: '',
+    dataset: {},
+    getAttribute(name) {
+      return name === 'data-shield-order' ? 'order-1-recon' : null;
+    }
+  };
+  const mockDoc = {
+    documentElement: {
+      attrs: {},
+      setAttribute(k, v) {
+        this.attrs[k] = v;
+      },
+      classList: { toggle() {} }
+    },
+    body: {
+      attrs: {},
+      setAttribute(k, v) {
+        this.attrs[k] = v;
+      }
+    },
+    querySelector(sel) {
+      return simCanvases[sel] || null;
+    },
+    querySelectorAll(sel) {
+      if (sel.includes('.section-filigree-corners')) return [filigreeBox];
+      if (sel.includes('[data-shield-order]')) return [shieldBox];
+      return [];
+    }
+  };
+
+  const hudStore = createCivicStore();
+  const controller = initHudController({ rootDocument: mockDoc, store: hudStore });
+  for (const [cid, cObj] of Object.entries(simCanvases)) {
+    assert.equal(cObj.hasNonZeroPixels(), true, `initHudController must render non-zero dithered pixels to ${cid}`);
+  }
+  assert.ok(filigreeBox.innerHTML.includes('<svg'), 'initHudController must hydrate .section-filigree-corners SVG');
+  assert.ok(shieldBox.innerHTML.includes('<svg'), 'initHudController must hydrate [data-shield-order] SVG');
+
+  controller.dispatchKey('3');
+  assert.equal(mockDoc.documentElement.attrs['data-palette'], 'phosphor-hud', 'dispatchKey("3") must sync data-palette');
+  controller.destroy();
+
   const elapsed = performance.now() - t0;
   return { elapsed };
 }
