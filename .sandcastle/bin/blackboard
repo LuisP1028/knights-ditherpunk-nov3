@@ -1,0 +1,317 @@
+#!/usr/bin/env node
+// Auto-generated Sandcastle Multi-Stage Ephemeral Blackboard CLI shim
+import { execFileSync } from "node:child_process";
+import { existsSync, readFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+
+const VALID_AGENTS = new Set(["plan","plan-scan-1","plan-scan-2","plan-1","codebase-mapper","api-schema-mapper","mcp-provisioner","library-installer","function-mapper","plan-2","planner-2.1","planner-2.2","planner-2.3","planner-2.4","planner-2.5","implementer","implementer-1","implementer-2","implementer-3","implementer-4","implementer-5","tester","tester-1","tester-2","tester-3","tester-4","tester-5","reviewer"]);
+const VALID_TARGETS = new Set(["all","scanners","planners","implementers","testers","plan","plan-scan-1","plan-scan-2","plan-1","codebase-mapper","api-schema-mapper","mcp-provisioner","library-installer","function-mapper","plan-2","planner-2.1","planner-2.2","planner-2.3","planner-2.4","planner-2.5","implementer","implementer-1","implementer-2","implementer-3","implementer-4","implementer-5","tester","tester-1","tester-2","tester-3","tester-4","tester-5","reviewer"]);
+
+function printUsage() {
+    const usage = [
+        "Usage: blackboard <command> [options] [content...]",
+        "",
+        "Commands:",
+        "  post-finding [--to <target>] <content>       Publish a finding (default --to all)",
+        "  post-request --to <target> <content>         Publish a request to any peer or group (all|scanners|planners|implementers|testers)",
+        "  claim [--seq <seq>] [content]                Claim an open request (--seq) or claim exclusive file/module ownership",
+        "  reply --reply-to <seq> <content>             Publish a response resolving request <seq>",
+        "  read [--since <seq>] [--wait <sec>]          Read ledger entries since <seq> (default 0)",
+        "  wait-request --seq <seq> [--wait <sec>]      Block until request <seq> resolves",
+        "  wait-scanners [--since <seq>] [--wait <sec>] Block until active peers complete",
+        "  done                                         Mark calling agent done (enforces unread & open-request Obligation Gate)",
+        "  status                                       Read unread delta and current peer/request statuses",
+    ].join("\n");
+    console.log(usage);
+}
+
+function parseArgs(argv) {
+    const positional = [];
+    const flags = {};
+    for (let i = 0; i < argv.length; i++) {
+        const arg = argv[i];
+        if (arg === "--help" || arg === "-h") {
+            flags.help = true;
+        } else if (arg === "--json") {
+            flags.json = true;
+        } else if (arg === "--unread") {
+            flags.unread = true;
+        } else if (arg.startsWith("--") && arg.includes("=")) {
+            const idx = arg.indexOf("=");
+            flags[arg.slice(2, idx)] = arg.slice(idx + 1);
+        } else if (
+            arg === "--to" ||
+            arg === "--target" ||
+            arg === "--seq" ||
+            arg === "--reply-to" ||
+            arg === "--since" ||
+            arg === "--wait" ||
+            arg === "--type" ||
+            arg === "--content" ||
+            arg === "--message" ||
+            arg === "--scope" ||
+            arg === "-m" ||
+            arg === "--agent" ||
+            arg === "--run-id" ||
+            arg === "--url"
+        ) {
+            const next = argv[i + 1];
+            if (next === undefined) {
+                throw new Error(`Missing value for flag ${arg}`);
+            }
+            const key = arg === "-m" ? "content" : arg.replace(/^-+/, "");
+            flags[key] = next;
+            i++;
+        } else {
+            positional.push(arg);
+        }
+    }
+    return { positional, flags };
+}
+
+function detectGitBranchContext() {
+    try {
+        const branch = execFileSync("git", ["rev-parse", "--abbrev-ref", "HEAD"], {
+            encoding: "utf8",
+            stdio: ["ignore", "pipe", "ignore"],
+        }).trim();
+        for (const agent of VALID_AGENTS) {
+            const prefix = `agent/${agent}-`;
+            if (branch.startsWith(prefix)) {
+                return { agentId: agent, runId: branch.slice(prefix.length) };
+            }
+        }
+        return null;
+    } catch {
+        return null;
+    }
+}
+
+function detectRepoRoot() {
+    try {
+        const commonDir = execFileSync("git", ["rev-parse", "--git-common-dir"], {
+            encoding: "utf8",
+            stdio: ["ignore", "pipe", "ignore"],
+        }).trim();
+        if (commonDir) {
+            return dirname(resolve(process.cwd(), commonDir));
+        }
+    } catch {
+        // Fallback
+    }
+    return process.cwd();
+}
+
+function resolveContext(flags) {
+    let agentId = flags.agent || process.env.SANDCASTLE_AGENT_ID || "";
+    let runId = flags["run-id"] || process.env.SANDCASTLE_RUN_ID || "";
+    let url = flags.url || process.env.SANDCASTLE_BLACKBOARD_URL || "";
+
+    if (!agentId || !runId) {
+        const gitCtx = detectGitBranchContext();
+        if (gitCtx) {
+            if (!agentId) agentId = gitCtx.agentId;
+            if (!runId) runId = gitCtx.runId;
+        }
+    }
+
+    if (!url && runId) {
+        const repoRoot = detectRepoRoot();
+        const snapshotPath = resolve(repoRoot, ".sandcastle", "logs", `${runId}-blackboard.json`);
+        if (existsSync(snapshotPath)) {
+            try {
+                const snap = JSON.parse(readFileSync(snapshotPath, "utf8"));
+                if (typeof snap.url === "string" && snap.url.length > 0) {
+                    url = snap.url;
+                }
+            } catch {
+                // Handled below
+            }
+        }
+    }
+
+    if (!agentId || !VALID_AGENTS.has(agentId)) {
+        throw new Error(`Blackboard context error: missing or invalid agent identity '${agentId}'.`);
+    }
+    if (!runId) {
+        throw new Error("Blackboard context error: missing SANDCASTLE_RUN_ID.");
+    }
+    if (!url) {
+        throw new Error(`Blackboard context error: missing SANDCASTLE_BLACKBOARD_URL for runId=${runId}.`);
+    }
+
+    return { agentId, runId, url: url.replace(/\/+$/, "") };
+}
+
+function formatEntryLine(entry) {
+    const meta = [`type=${entry.type}`];
+    if (entry.status) meta.push(`status=${entry.status}`);
+    if (entry.replyTo !== undefined && entry.replyTo !== null) meta.push(`replyTo=#${entry.replyTo}`);
+    if (entry.claimedBy) meta.push(`claimedBy=${entry.claimedBy}`);
+    if (entry.resolvedBy) meta.push(`resolvedBy=${entry.resolvedBy}`);
+    if (entry.responseSeq !== undefined && entry.responseSeq !== null) meta.push(`responseSeq=#${entry.responseSeq}`);
+    return `  [seq=#${entry.seq}] [${entry.timestamp}] ${entry.sender} -> ${entry.target} (${meta.join(", ")}): ${entry.content}`;
+}
+
+function formatOutput(data, isWrite) {
+    const lines = [];
+    const p = data.participants || {};
+    const peerStr = Object.keys(p)
+        .map((id) => `${id}=${p[id]?.status || "unknown"}`)
+        .join(" | ");
+
+    lines.push(`=== BLACKBOARD [run_id=${data.runId} | agent=${data.caller} | last_seq=${data.last_seq}] ===`);
+    lines.push(`STATUS: ${data.action_status || (data.ok ? "OK" : "ERROR")}`);
+    lines.push(`PEERS: ${peerStr}`);
+
+    if (data.message) lines.push(`MESSAGE: ${data.message}`);
+    if (data.entry) lines.push(`PUBLISHED: ${formatEntryLine(data.entry).trim()}`);
+    if (data.scanners_complete !== undefined) {
+        lines.push(`BARRIER: scanners_complete=${Boolean(data.scanners_complete)}`);
+    }
+
+    const reqForYou = Array.isArray(data.requests_for_you) ? data.requests_for_you : [];
+    lines.push(`REQUESTS TARGETING YOU (${reqForYou.length}):`);
+    if (reqForYou.length === 0) {
+        lines.push("  (none)");
+    } else {
+        for (const r of reqForYou) lines.push(formatEntryLine(r));
+    }
+
+    const deltaList = isWrite
+        ? Array.isArray(data.piggybacked_entries) ? data.piggybacked_entries : []
+        : Array.isArray(data.entries) ? data.entries : [];
+    lines.push(isWrite ? `PIGGYBACKED UNREAD DELTA (${deltaList.length}):` : `LEDGER DELTA (${deltaList.length}):`);
+    if (deltaList.length === 0) {
+        lines.push("  (none)");
+    } else {
+        for (const entry of deltaList) lines.push(formatEntryLine(entry));
+    }
+
+    return lines.join("\n");
+}
+
+async function main() {
+    const rawArgs = process.argv.slice(2);
+    const { positional, flags } = parseArgs(rawArgs);
+
+    if (flags.help || positional.length === 0) {
+        printUsage();
+        process.exit(positional.length === 0 && !flags.help ? 1 : 0);
+    }
+
+    let subcommand = positional[0];
+    const restPositional = positional.slice(1);
+
+    if (subcommand === "help") {
+        printUsage();
+        process.exit(0);
+    }
+
+    const { agentId, runId, url } = resolveContext(flags);
+    const contentText = (flags.content ?? flags.message ?? flags.scope ?? restPositional.join(" ")).trim();
+
+    let endpoint = "";
+    let method = "GET";
+    let bodyObj = null;
+    let isWrite = false;
+
+    if (subcommand === "post-finding" || subcommand === "finding") {
+        const target = flags.to || flags.target || "all";
+        if (!VALID_TARGETS.has(target)) {
+            throw new Error(`Invalid target '${target}'.`);
+        }
+        if (!contentText) throw new Error("post-finding requires non-empty content.");
+        endpoint = `${url}/api/finding`;
+        method = "POST";
+        bodyObj = { sender: agentId, target, content: contentText };
+        isWrite = true;
+    } else if (subcommand === "post-request" || subcommand === "request") {
+        const target = flags.to || flags.target || "all";
+        if (!VALID_TARGETS.has(target)) {
+            throw new Error(`Invalid target '${target}'.`);
+        }
+        if (!contentText) throw new Error("post-request requires non-empty content.");
+        endpoint = `${url}/api/request`;
+        method = "POST";
+        bodyObj = { sender: agentId, target, content: contentText };
+        isWrite = true;
+    } else if (subcommand === "claim") {
+        const seqRaw = flags.seq ?? flags["reply-to"];
+        const seq = seqRaw !== undefined ? Number.parseInt(String(seqRaw), 10) : null;
+        const target = flags.to || flags.target || "all";
+        const claimContent = contentText || (seq !== null ? `Claimed request #${seq}.` : "");
+        if (!claimContent) throw new Error("claim requires --seq <seq> or a scope/file description.");
+        endpoint = `${url}/api/claim`;
+        method = "POST";
+        bodyObj = { sender: agentId, target, seq, content: claimContent };
+        isWrite = true;
+    } else if (subcommand === "reply" || subcommand === "respond") {
+        const seqRaw = flags["reply-to"] ?? flags.seq ?? flags.to;
+        const seq = Number.parseInt(String(seqRaw ?? ""), 10);
+        if (!Number.isInteger(seq) || seq < 1) throw new Error("reply requires --reply-to <seq>.");
+        if (!contentText) throw new Error("reply requires non-empty response content.");
+        endpoint = `${url}/api/reply`;
+        method = "POST";
+        bodyObj = { sender: agentId, replyTo: seq, content: contentText };
+        isWrite = true;
+    } else if (subcommand === "read" || subcommand === "poll" || subcommand === "status") {
+        const sinceRaw = flags.since !== undefined ? Number.parseInt(String(flags.since), 10) : 0;
+        const waitSec = flags.wait !== undefined ? Number.parseFloat(String(flags.wait)) : 0;
+        const params = new URLSearchParams({
+            agent: agentId,
+            since: String(sinceRaw),
+            wait: String(Number.isFinite(waitSec) && waitSec > 0 ? waitSec : 0),
+        });
+        endpoint = `${url}/api/read?${params.toString()}`;
+        method = "GET";
+    } else if (subcommand === "wait-request") {
+        const seq = Number.parseInt(String(flags.seq ?? flags["reply-to"] ?? "0"), 10);
+        const waitSec = flags.wait !== undefined ? Number.parseFloat(String(flags.wait)) : 30;
+        const params = new URLSearchParams({
+            agent: agentId,
+            seq: String(seq),
+            wait: String(Number.isFinite(waitSec) && waitSec > 0 ? waitSec : 30),
+        });
+        endpoint = `${url}/api/wait-request?${params.toString()}`;
+        method = "GET";
+    } else if (subcommand === "wait-scanners") {
+        const sinceRaw = flags.since !== undefined ? Number.parseInt(String(flags.since), 10) : -1;
+        const waitSec = flags.wait !== undefined ? Number.parseFloat(String(flags.wait)) : 45;
+        const params = new URLSearchParams({
+            agent: agentId,
+            since: String(sinceRaw),
+            wait: String(Number.isFinite(waitSec) && waitSec > 0 ? waitSec : 45),
+        });
+        endpoint = `${url}/api/wait-scanners?${params.toString()}`;
+        method = "GET";
+    } else if (subcommand === "done") {
+        endpoint = `${url}/api/done`;
+        method = "POST";
+        bodyObj = { sender: agentId };
+    } else {
+        throw new Error(`Unknown blackboard subcommand '${subcommand}'.`);
+    }
+
+    const response = await fetch(endpoint, {
+        method,
+        headers: bodyObj ? { "content-type": "application/json" } : undefined,
+        body: bodyObj ? JSON.stringify(bodyObj) : undefined,
+    });
+
+    const data = await response.json();
+    if (flags.json) {
+        console.log(JSON.stringify(data, null, 2));
+    } else {
+        console.log(formatOutput(data, isWrite));
+    }
+
+    if (!response.ok || data.ok === false) {
+        process.exit(1);
+    }
+}
+
+main().catch((err) => {
+    console.error(`[blackboard error] ${err instanceof Error ? err.message : String(err)}`);
+    process.exit(1);
+});

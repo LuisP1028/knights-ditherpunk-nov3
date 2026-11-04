@@ -1,0 +1,14 @@
+{
+  "name": "knights-ditherpunk-nov3",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Ornate Chivalric Knights + Bill Atkinson Error-Diffusion Ditherpunk + Modern Tactical HUD Interactive Election Day Portal for Tuesday, November 3, 2026",
+  "scripts": {
+    "start": "node src/verify.mjs",
+    "verify": "node src/verify.mjs --verify"
+  },
+  "devDependencies": {
+    "@ai-hero/sandcastle": "^0.12.0"
+  }
+}

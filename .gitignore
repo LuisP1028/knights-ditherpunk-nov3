@@ -1,0 +1,29 @@
+# Node dependencies
+node_modules/
+
+# Python caches & test artifacts
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+
+# macOS metadata
+.DS_Store
+
+# Browser / MCP transient logs
+.playwright-mcp/
+logs/
+
+# Sandcastle runtime logs & ephemeral worktrees
+.sandcastle/logs/
+.sandcastle/worktrees/
+.sandcastle/patches/
+.sandcastle/.current-run-id
+.sandcastle/.env
+sandcastle_run_*/
+
+# Scratch / temporary directories
+scratch/
+.scratch/
