@@ -1,0 +1,6 @@
+LANGUAGE.md
+functional_specification_001.md
+package.json
+.gitignore
+.nojekyll
+wayfinder/20261104T011759-860-audv/codebase-map.md

@@ -1,0 +1,24 @@
+# Stage 2 Architecture Planning & Wayfinder Handoff
+
+**Run ID:** `20261104T011759-860-audv`  
+**Agent:** `plan-2` (Lead Architecture Coordinator)  
+**Governed By:** `LANGUAGE.md`  
+**Status:** Complete — All Stage 2 Architecture & Design Documents Synthesized and Cross-Referenced
+
+## Stage 2 Architecture Documents (`planner-2.1` .. `planner-2.5`):
+1. `wayfinder/20261104T011759-860-audv/architecture-and-dag.md` (`planner-2.1`): Complete system architecture, discrete ES2024 module boundaries, dual-compatible cross-track function I/O contracts, sequential vs. parallel execution DAG across the 5 disjoint implementation tracks (`implementer-1`..`5` / `tester-1`..`5`), Track 1 (`src/hud_controller.mjs`, `src/verify.mjs`, `README.md`) multi-timezone November 3 poll-closing countdown logic (`EST`, `CST`, `MST`, `PST`, `AKST`, `HST`), keyboard hotkeys (`[1-4]`, `[K]`, `[L]`, `[H]`), and sub-250ms 5-suite CLI verification architecture.
+2. `wayfinder/20261104T011759-860-audv/storage-architecture.md` (`planner-2.2`): Client-side deterministic snapshot storage architecture for Track 2 (`data/election_nov3_dataset.json`, `src/civic_store.mjs`), storage model trade-off evaluation (CoW In-Memory + Single-Key Atomic `localStorage` JSON Snapshot vs. B+Tree vs. LSM-Tree), single-thread & cross-tab OCC/MVCC concurrency control, Snapshot Isolation, 32-bit FNV-1a checksum integrity validation (`computeFnv1aChecksum`), sticky `MEMORY_FALLBACK` crash recovery, and the authoritative dual-alias schema for General Election Day (Tuesday, November 3, 2026).
+3. `wayfinder/20261104T011759-860-audv/stack-usage-guide.md` (`planner-2.3`): Zero-external-dependency ES2024 (`.mjs`) isomorphic stack baseline, TypedArray (`Uint8Array`, `Uint8ClampedArray`, `Float32Array`) Canvas2D pixel pipelines, Node.js built-in verification patterns, Playwright MCP verification workflows, and V8-optimized Track 3 (`src/knight_heraldry.mjs`) procedural knight shading (~0.65ms/scene via 1D fluted-armor LUTs + polynomial specular squaring), inline gothic SVG heraldry factories, and 5x7 ASCII bitmap font "I VOTED — NOV 3" crest rendering studio.
+4. `wayfinder/20261104T011759-860-audv/suggested-optimizations.md` (`planner-2.4`): Cross-domain bottleneck analysis and mathematical/runtime optimizations for Track 4 (`src/atkinson_dither_engine.mjs`) and all peer tracks, featuring the padded 3-row `Float32Array(3 * (width + 4))` sliding ring buffer for exact 6-neighbor $\frac{1}{8}$-weight (`0.125` float multiplication, 75.0% propagation / 25.0% absorption) Bill Atkinson error-diffusion dithering (~0.794ms per `320x240` frame), branchless `Uint32Array` ABGR palette LUT mapping (~0.081ms), comparative kernels (`atkinson-1bit`, `atkinson-2bit`, `floyd-steinberg`, `bayer-8x8`), 1Hz countdown vs. 60Hz `requestAnimationFrame` decoupling, dirty-flag canvas caching, and reduced-motion pausing.
+5. `wayfinder/20261104T011759-860-audv/visual-taste-direction.md` (`planner-2.5`): Authoritative Tri-Layer Chivalric Cathedral + Bill Atkinson 1-Bit/2-Bit Ditherpunk + Modern Tactical HUD visual & UI direction for Track 5 (`index.html`, `styles/ditherpunk_hud.css`), empirically verified WCAG AAA/AA contrast ratios across all 4 curated palettes (`obsidian-bone`, `crimson-herald`, `phosphor-hud`, `cobalt-aegis`), 0px horizontal overflow responsive grid geometry (`320px` through `1920px+`), all required semantic DOM & `<canvas>` IDs, and anti-leak invariants (zero raw curly-brace tokens in DOM copy).
+
+## Stage 1 Discovery & Refined Specification Baseline:
+- `wayfinder/20261104T011759-860-audv/refined-specification.md`
+- `wayfinder/20261104T011759-860-audv/codebase-map.md`
+- `wayfinder/20261104T011759-860-audv/api-schemas.md`
+- `wayfinder/20261104T011759-860-audv/api-schema-mapper-election-nov3-schema.json`
+- `wayfinder/20261104T011759-860-audv/installed-libraries.md`
+- `wayfinder/20261104T011759-860-audv/library-functions.md`
+- `wayfinder/20261104T011759-860-audv/mcp-tools.md`
+- `functional_specification_001.md`
+- `LANGUAGE.md`
