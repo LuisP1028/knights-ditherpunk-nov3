@@ -1814,17 +1814,23 @@ export function ensureWorktree(
             return repoDir;
         }
         const wtDir = worktreeDir(branch, repoDir);
-        if (existsSync(wtDir)) {
+        if (existsSync(join(wtDir, ".git"))) {
             linkWorktreeDependencies(wtDir, repoDir);
             return wtDir;
+        }
+        if (existsSync(wtDir)) {
+            rmSync(wtDir, { recursive: true, force: true });
         }
         mkdirSync(join(repoDir, ".sandcastle", "worktrees"), { recursive: true });
         const maxAttempts = 6;
         for (let attempt = 1; attempt <= maxAttempts; attempt++) {
             try {
-                if (existsSync(wtDir)) {
+                if (existsSync(join(wtDir, ".git"))) {
                     linkWorktreeDependencies(wtDir, repoDir);
                     return wtDir;
+                }
+                if (existsSync(wtDir)) {
+                    rmSync(wtDir, { recursive: true, force: true });
                 }
                 ignoreMissing(["git", "worktree", "prune"], repoDir);
                 const args = [
