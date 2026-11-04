@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en" data-palette="obsidian-bone" data-hud-overlay="true">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ORDER OF THE CIVIC AEGIS // NOVEMBER III BALLOT COMMAND — General Election Day, Tuesday, November 3, 2026. Ornate Chivalric Knights, Bill Atkinson Error-Diffusion Ditherpunk, and Modern Tactical HUD Interactive Portal." />
+  <title>ORDER OF THE CIVIC AEGIS // NOVEMBER 3, 2026 ELECTION DAY COMMAND</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='6' fill='%230A0B0E'/%3E%3Cpath d='M12 10 H52 V32 C52 46 32 56 32 56 C32 56 12 46 12 32 Z' fill='%23161922' stroke='%23E63946' stroke-width='3'/%3E%3Cpath d='M32 16 V48 M20 30 H44' stroke='%23F4F1EA' stroke-width='4'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="./styles/ditherpunk_hud.css" />
+</head>
+<body>
+  <!-- ==========================================================================
+       STICKY TACTICAL HUD TOP TELEMETRY BAR (#hud-top-telemetry-bar)
+       ========================================================================== -->
+  <header id="hud-top-telemetry-bar" role="banner" aria-label="Tactical HUD Election Day Telemetry Header">
+    <div class="hud-topbar-inner">
+      <div class="hud-brand-cluster">
+        <span class="hud-live-beacon" aria-hidden="true"></span>
+        <span class="hud-sys-title" id="hud-sys-date">SYS_DATE: 2026-11-03 // GENERAL ELECTION DAY</span>
+      </div>
+
+      <div class="hud-telemetry-strip" id="hud-telemetry-readout" aria-live="polite">
+        <span class="hud-pill" id="hud-pill-kernel">KERNEL: <strong id="hud-val-kernel">ATKINSON_6x1/8</strong></span>
+        <span class="hud-pill" id="hud-pill-errprop">ERR_PROP: <strong id="hud-val-errprop">75.0%</strong></span>
+        <span class="hud-pill" id="hud-pill-latency">FRAME_MS: <strong id="hud-val-latency">0.78 ms</strong></span>
+        <span class="hud-pill" id="hud-pill-readiness">READINESS: <strong id="hud-val-readiness">20%</strong></span>
+        <span class="hud-pill" id="hud-pill-rank">AEGIS_RANK: <strong id="hud-val-rank">SCOUT OF THE PRECINCT</strong></span>
+        <span class="hud-pill" id="hud-pill-ballot">BALLOT_LOCK: <strong id="hud-val-ballot">0/6</strong></span>
+        <span class="hud-pill" id="hud-pill-storage">STORAGE: <strong id="hud-val-storage">LOCAL_STORAGE</strong></span>
+      </div>
+
+      <nav class="hud-nav-links" aria-label="Sector Navigation">
+        <div class="hud-nav-group">
+          <a class="hud-nav-link" href="#section-hero-aegis">I. AEGIS HERO</a>
+          <a class="hud-nav-link" href="#section-nov3-command">II. NOV 3 POLL CLOCKS</a>
+          <a class="hud-nav-link" href="#section-dither-forge">III. ATKINSON FORGE</a>
+          <a class="hud-nav-link" href="#section-knight-orders">IV. KNIGHT ORDERS &amp; GAUNTLET</a>
+          <a class="hud-nav-link" href="#section-ballot-simulator">V. SAMPLE BALLOT</a>
+          <a class="hud-nav-link" href="#section-voted-crest">VI. I-VOTED CREST</a>
+        </div>
+        <div class="hud-hotkey-legend" aria-label="Keyboard Shortcuts">
+          <span><kbd class="kbd-badge">[1-4]</kbd> PALETTE</span>
+          <span><kbd class="kbd-badge">[K]</kbd> KERNEL</span>
+          <span><kbd class="kbd-badge">[L]</kbd> TORCH ORBIT</span>
+          <span><kbd class="kbd-badge">[H]</kbd> HUD GRID</span>
+          <span><kbd class="kbd-badge">[V]</kbd> MINT SEAL</span>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       MAIN PORTAL SHELL
+       ========================================================================== -->
+  <main class="portal-shell" id="app-root">
+
+    <!-- ========================================================================
+         SECTION I: HERO MONUMENTAL BANNER (#section-hero-aegis)
+         ======================================================================== -->
+    <section id="section-hero-aegis" class="cathedral-section" aria-labelledby="hero-main-heading">
+      <div class="section-filigree-corners" data-filigree-target="hero" aria-hidden="true"></div>
+
+      <div class="hero-aegis-grid">
+        <div class="hero-narrative-column">
+          <div id="hero-gothic-arch-svg" class="gothic-arch-banner" aria-label="Gothic Cathedral Arch Heraldry">
+            <svg viewBox="0 0 600 110" width="100%" height="110" role="img" aria-label="Order of the Civic Aegis Cathedral Arch">
+              <rect x="2" y="2" width="596" height="106" fill="none" stroke="currentColor" stroke-opacity="0.25" stroke-width="1" />
+              <path d="M 20 102 C 20 42, 160 12, 300 8 C 440 12, 580 42, 580 102" fill="none" stroke="currentColor" stroke-width="2" />
+              <path d="M 38 102 C 38 52, 175 22, 300 16 C 425 22, 562 52, 562 102" fill="none" stroke="currentColor" stroke-opacity="0.55" stroke-width="1.2" stroke-dasharray="6 4" />
+              <circle cx="300" cy="44" r="18" fill="none" stroke="currentColor" stroke-width="1.6" />
+              <circle cx="300" cy="44" r="7" fill="none" stroke="currentColor" stroke-width="1.2" />
+              <line x1="282" y1="44" x2="318" y2="44" stroke="currentColor" stroke-width="1" />
+              <line x1="300" y1="26" x2="300" y2="62" stroke="currentColor" stroke-width="1" />
+              <text x="300" y="82" text-anchor="middle" fill="currentColor" font-family="monospace" font-size="11" letter-spacing="3">ORDER OF THE CIVIC AEGIS // III NOVEMBER MMXXVI</text>
+              <text x="300" y="98" text-anchor="middle" fill="currentColor" font-family="serif" font-size="10" opacity="0.8">GUARD THE POLL • DEFEND THE QUEUE • CAST THE SEAL</text>
+            </svg>
+          </div>
+
+          <span class="hud-kicker">SECTOR I // ORDER OF THE CIVIC AEGIS // NOVEMBER III BALLOT COMMAND</span>
+          <h1 id="hero-main-heading" class="chivalric-hero-title">
+            VOTE TODAY — TUESDAY, NOVEMBER 3, 2026: GUARD THE POLL, CAST THE SEAL.
+          </h1>
+          <p class="civic-prose">
+            High-relief Gothic plate armor and chivalric cathedral masonry synthesized in real time through authentic 6-neighbor Bill Atkinson Error-Diffusion Dithering and framed by high-precision Tactical Avionics HUD telemetry for General Election Day.
+          </p>
+
+          <div class="hero-mandate-callout">
+            <strong>STATUTORY QUEUE PROTECTION (NOV 3, 2026):</strong> If you are in line before polls close on November 3, stay in line—your right to cast a ballot is protected by law. Call <a href="tel:8666878683">866-OUR-VOTE</a> for immediate nonpartisan assistance.
+          </div>
+
+          <div class="hero-quick-controls" aria-label="Quick Dither Palette and Kernel Switchers">
+            <span class="control-group-label">DITHERPUNK PALETTE MATRIX [HOTKEYS 1–4]</span>
+            <div class="button-cluster" role="group" aria-label="Select Dither Palette">
+              <button type="button" class="tactical-btn is-active" data-palette="obsidian-bone" data-action="set-palette" aria-pressed="true">[1] OBSIDIAN &amp; BONE</button>
+              <button type="button" class="tactical-btn" data-palette="crimson-herald" data-action="set-palette" aria-pressed="false">[2] CRIMSON HERALD</button>
+              <button type="button" class="tactical-btn" data-palette="phosphor-hud" data-action="set-palette" aria-pressed="false">[3] PHOSPHOR HUD</button>
+              <button type="button" class="tactical-btn" data-palette="cobalt-aegis" data-action="set-palette" aria-pressed="false">[4] COBALT AEGIS</button>
+            </div>
+
+            <span class="control-group-label">ACTIVE QUANTIZATION KERNEL [HOTKEY K]</span>
+            <div class="button-cluster" role="group" aria-label="Select Quantization Kernel">
+              <button type="button" class="tactical-btn is-active" data-kernel="atkinson-1bit" data-action="set-kernel" aria-pressed="true">ATKINSON 1-BIT (6×1/8)</button>
+              <button type="button" class="tactical-btn" data-kernel="atkinson-2bit" data-action="set-kernel" aria-pressed="false">ATKINSON 2-BIT (4-TONE)</button>
+              <button type="button" class="tactical-btn" data-kernel="floyd-steinberg" data-action="set-kernel" aria-pressed="false">FLOYD-STEINBERG (16/16)</button>
+              <button type="button" class="tactical-btn" data-kernel="bayer-8x8" data-action="set-kernel" aria-pressed="false">ORDERED BAYER 8×8</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-viewport-column">
+          <div class="canvas-hud-frame">
+            <div class="canvas-hud-header">
+              <span>CAM_01 // THE GUARDIAN OF THE NOVEMBER III BALLOT</span>
+              <span id="hero-canvas-spec-readout">320×240 // ATKINSON 6×1/8 (75.0% PROP)</span>
+            </div>
+
+            <div class="canvas-stage-wrapper">
+              <canvas id="canvas-hero-knight" class="dither-canvas" width="320" height="240" data-scene="hero-guardian" aria-label="Bill Atkinson Dithered Chivalric Knight Monument: The Guardian of the November III Ballot"></canvas>
+            </div>
+
+            <div class="canvas-hud-footer">
+              <span id="hud-reticle-readout">RETICLE: X=160 Y=120 // LUM=184 // QUANT=255</span>
+              <span id="hero-frame-perf-readout">SHADE+DITHER: 0.78 ms</span>
+            </div>
+          </div>
+
+          <div class="hero-lighting-bar">
+            <button type="button" id="btn-toggle-light" class="tactical-btn is-active" data-action="toggle-light" aria-pressed="true">
+              [L] TORCH ORBIT: ACTIVE
+            </button>
+            <div class="slider-control-row">
+              <label for="slider-light-angle">TORCH AZIMUTH: <span id="val-light-angle">0.65 rad</span></label>
+              <input type="range" id="slider-light-angle" min="0" max="6.28" step="0.05" value="0.65" />
+            </div>
+            <button type="button" id="btn-toggle-visor" class="tactical-btn" data-action="toggle-visor" aria-pressed="false">
+              ARMET VISOR: CLOSED
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION II: MULTI-TIMEZONE POLL-CLOSING COMMAND (#section-nov3-command)
+         ======================================================================== -->
+    <section id="section-nov3-command" class="cathedral-section" aria-labelledby="nov3-command-heading">
+      <div class="section-filigree-corners" data-filigree-target="command" aria-hidden="true"></div>
+
+      <div class="section-header-block">
+        <div class="section-header-top">
+          <span class="hud-kicker">SECTOR II // MULTI-ZONE POLL CLOSING MATRIX // TUESDAY, NOVEMBER 3, 2026</span>
+          <span class="hud-pill">ACTIVE FOCUS ZONE: <strong id="hud-active-zone-label">EST (UTC-5)</strong></span>
+        </div>
+        <h2 id="nov3-command-heading" class="chivalric-section-title">
+          U.S. TIMEZONE POLL-CLOSING COUNTDOWNS &amp; STATUTORY VOTER PROTECTION TERMINAL
+        </h2>
+        <p class="civic-prose">
+          Real-time countdown telemetry to local poll closings across all six U.S. time zones on Tuesday, November 3, 2026. Select any time zone card to synchronize primary mission-control telemetry.
+        </p>
+      </div>
+
+      <div id="countdown-grid-zones" class="timezone-countdown-grid" role="region" aria-label="Six U.S. Timezone Poll-Closing Countdowns">
+        <article class="tz-card is-selected" data-zone-id="EST" data-status="POLLS_OPEN_ACTIVE" tabindex="0">
+          <div class="tz-card-top">
+            <span class="tz-code">EST (UTC-5)</span>
+            <span class="tz-offset-badge">CLOSE: 19:00 / 20:00</span>
+          </div>
+          <div class="tz-countdown-clock" data-tz-clock="EST">02:05:27</div>
+          <div class="tz-status-badge" data-tz-status="EST">POLLS OPEN // ACTIVE BALLOT WINDOW</div>
+          <div class="tz-progress-track" aria-hidden="true">
+            <div class="tz-progress-fill" data-tz-progress="EST" style="width: 85%;"></div>
+          </div>
+          <div class="tz-states-list">STATES: GA, IN, KY, VA, VT, FL, NC, OH, WV, PA, MI, NY, MA</div>
+        </article>
+
+        <article class="tz-card" data-zone-id="CST" data-status="POLLS_OPEN_ACTIVE" tabindex="0">
+          <div class="tz-card-top">
+            <span class="tz-code">CST (UTC-6)</span>
+            <span class="tz-offset-badge">CLOSE: 19:00 / 20:00</span>
+          </div>
+          <div class="tz-countdown-clock" data-tz-clock="CST">03:05:27</div>
+          <div class="tz-status-badge" data-tz-status="CST">POLLS OPEN // ACTIVE BALLOT WINDOW</div>
+          <div class="tz-progress-track" aria-hidden="true">
+            <div class="tz-progress-fill" data-tz-progress="CST" style="width: 78%;"></div>
+          </div>
+          <div class="tz-states-list">STATES: AL, MS, MO, OK, TN, TX, IL, WI, MN, AR, LA</div>
+        </article>
+
+        <article class="tz-card" data-zone-id="MST" data-status="POLLS_OPEN_ACTIVE" tabindex="0">
+          <div class="tz-card-top">
+            <span class="tz-code">MST (UTC-7)</span>
+            <span class="tz-offset-badge">CLOSE: 19:00 / 20:00</span>
+          </div>
+          <div class="tz-countdown-clock" data-tz-clock="MST">04:05:27</div>
+          <div class="tz-status-badge" data-tz-status="MST">POLLS OPEN // ACTIVE BALLOT WINDOW</div>
+          <div class="tz-progress-track" aria-hidden="true">
+            <div class="tz-progress-fill" data-tz-progress="MST" style="width: 71%;"></div>
+          </div>
+          <div class="tz-states-list">STATES: AZ, CO, NM, UT, WY, MT</div>
+        </article>
+
+        <article class="tz-card" data-zone-id="PST" data-status="POLLS_OPEN_ACTIVE" tabindex="0">
+          <div class="tz-card-top">
+            <span class="tz-code">PST (UTC-8)</span>
+            <span class="tz-offset-badge">CLOSE: 20:00 LOCAL</span>
+          </div>
+          <div class="tz-countdown-clock" data-tz-clock="PST">05:05:27</div>
+          <div class="tz-status-badge" data-tz-status="PST">POLLS OPEN // ACTIVE BALLOT WINDOW</div>
+          <div class="tz-progress-track" aria-hidden="true">
+            <div class="tz-progress-fill" data-tz-progress="PST" style="width: 64%;"></div>
+          </div>
+          <div class="tz-states-list">STATES: CA, WA, OR, NV, ID</div>
+        </article>
+
+        <article class="tz-card" data-zone-id="AKST" data-status="POLLS_OPEN_ACTIVE" tabindex="0">
+          <div class="tz-card-top">
+            <span class="tz-code">AKST (UTC-9)</span>
+            <span class="tz-offset-badge">CLOSE: 20:00 LOCAL</span>
+          </div>
+          <div class="tz-countdown-clock" data-tz-clock="AKST">06:05:27</div>
+          <div class="tz-status-badge" data-tz-status="AKST">POLLS OPEN // ACTIVE BALLOT WINDOW</div>
+          <div class="tz-progress-track" aria-hidden="true">
+            <div class="tz-progress-fill" data-tz-progress="AKST" style="width: 57%;"></div>
+          </div>
+          <div class="tz-states-list">STATES: AK</div>
+        </article>
+
+        <article class="tz-card" data-zone-id="HST" data-status="POLLS_OPEN_ACTIVE" tabindex="0">
+          <div class="tz-card-top">
+            <span class="tz-code">HST (UTC-10)</span>
+            <span class="tz-offset-badge">CLOSE: 19:00 LOCAL</span>
+          </div>
+          <div class="tz-countdown-clock" data-tz-clock="HST">06:05:27</div>
+          <div class="tz-status-badge" data-tz-status="HST">POLLS OPEN // ACTIVE BALLOT WINDOW</div>
+          <div class="tz-progress-track" aria-hidden="true">
+            <div class="tz-progress-fill" data-tz-progress="HST" style="width: 57%;"></div>
+          </div>
+          <div class="tz-states-list">STATES: HI</div>
+        </article>
+      </div>
+
+      <div id="banner-inline-voting-mandate" class="mandate-banner-box" role="alert">
+        <span class="mandate-banner-title">MANDATE // HOLD THE LINE — STATUTORY RIGHT TO VOTE WHEN IN QUEUE</span>
+        <p class="mandate-banner-copy">
+          If you are in line before polls close on November 3, stay in line—your right to cast a ballot is protected by law. Poll workers cannot turn away any eligible voter who joined the queue prior to the official local closing time.
+        </p>
+      </div>
+
+      <div class="section-header-top">
+        <span class="hud-kicker">NONPARTISAN ELECTION PROTECTION COALITION HOTLINES (LIVE NOV 3)</span>
+      </div>
+      <div id="grid-election-hotlines" class="hotlines-grid">
+        <div class="hotline-card" data-hotline-id="hotline-en">
+          <span class="hotline-phone">866-OUR-VOTE (866-687-8683)</span>
+          <span class="hotline-meta">LANGUAGE: ENGLISH // LAWYERS' COMMITTEE FOR CIVIL RIGHTS</span>
+        </div>
+        <div class="hotline-card" data-hotline-id="hotline-es">
+          <span class="hotline-phone">888-VE-Y-VOTA (888-839-8682)</span>
+          <span class="hotline-meta">LANGUAGE: ESPAÑOL / SPANISH // NALEO EDUCATIONAL FUND</span>
+        </div>
+        <div class="hotline-card" data-hotline-id="hotline-api">
+          <span class="hotline-phone">888-API-VOTE (888-274-8683)</span>
+          <span class="hotline-meta">LANGUAGE: ASIAN LANGUAGES // APIAVOTE &amp; AAJC</span>
+        </div>
+        <div class="hotline-card" data-hotline-id="hotline-ar">
+          <span class="hotline-phone">844-YALLA-US (844-925-5287)</span>
+          <span class="hotline-meta">LANGUAGE: ARABIC / العربية // ARAB AMERICAN INSTITUTE</span>
+        </div>
+      </div>
+
+      <div id="grid-voter-rights" class="voter-rights-grid" aria-label="Four Cardinal Statutory Voter Protections">
+        <article class="right-card">
+          <h3 class="right-title">I. IN-LINE VOTING RIGHT</h3>
+          <p class="right-desc">If you are in queue before the scheduled poll-closing time on November 3, stay in line; you are legally entitled to vote.</p>
+        </article>
+        <article class="right-card">
+          <h3 class="right-title">II. REPLACEMENT BALLOT RIGHT</h3>
+          <p class="right-desc">If you make a mistake or spoil your paper ballot before casting it, you have the right to request a fresh replacement ballot.</p>
+        </article>
+        <article class="right-card">
+          <h3 class="right-title">III. PROVISIONAL BALLOT RIGHT</h3>
+          <p class="right-desc">If your registration status or ID is questioned at the check-in desk, demand a provisional ballot under federal HAVA law.</p>
+        </article>
+        <article class="right-card">
+          <h3 class="right-title">IV. ACCESSIBLE VOTING &amp; ASSISTANCE</h3>
+          <p class="right-desc">Every polling place must provide an accessible voting system and allow you to bring a person of your choice to assist you.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION III: INTERACTIVE BILL ATKINSON DITHER FORGE (#section-dither-forge)
+         ======================================================================== -->
+    <section id="section-dither-forge" class="cathedral-section" aria-labelledby="dither-forge-heading">
+      <div class="section-filigree-corners" data-filigree-target="forge" aria-hidden="true"></div>
+
+      <div class="section-header-block">
+        <div class="section-header-top">
+          <span class="hud-kicker">SECTOR III // BILL ATKINSON ERROR-DIFFUSION WORKBENCH</span>
+          <span class="hud-pill">RING BUFFER: <strong>FLOAT32 3-ROW GUARD APRON (* 0.125)</strong></span>
+        </div>
+        <h2 id="dither-forge-heading" class="chivalric-section-title">
+          LIVE BILL ATKINSON 6-NEIGHBOR 1/8 ERROR-DIFFUSION ENGINE &amp; PORTRAIT FORGE
+        </h2>
+        <p class="civic-prose">
+          Inspect and tune the live pixel quantization pipeline across all six canvases. Bill Atkinson's classic algorithm diffuses exactly 1/8 (12.5%) of quantization error Δ to six neighboring pixels—propagating 75.0% (6/8) of error while absorbing 25.0% locally to carve crisp specular contours along gothic armor and cathedral stonework.
+        </p>
+      </div>
+
+      <div class="dither-forge-grid">
+        <div class="forge-panel">
+          <span class="control-group-label">BILL ATKINSON 6-NEIGHBOR 1/8 (0.125) KERNEL TOPOLOGY</span>
+          <div id="atkinson-kernel-diagram" class="atkinson-matrix-grid" role="img" aria-label="Bill Atkinson 4 by 3 Error Diffusion Matrix showing 6 neighbors each receiving 1/8 weight for 75% total propagation">
+            <div class="matrix-cell is-empty">
+              <span>0</span>
+              <span class="matrix-coord">(x-1, y)</span>
+            </div>
+            <div class="matrix-cell is-origin">
+              <span>PIXEL *</span>
+              <span class="matrix-coord">(x, y) Δ</span>
+            </div>
+            <div class="matrix-cell is-neighbor">
+              <span>1/8 (0.125)</span>
+              <span class="matrix-coord">(x+1, y)</span>
+            </div>
+            <div class="matrix-cell is-neighbor">
+              <span>1/8 (0.125)</span>
+              <span class="matrix-coord">(x+2, y)</span>
+            </div>
+
+            <div class="matrix-cell is-neighbor">
+              <span>1/8 (0.125)</span>
+              <span class="matrix-coord">(x-1, y+1)</span>
+            </div>
+            <div class="matrix-cell is-neighbor">
+              <span>1/8 (0.125)</span>
+              <span class="matrix-coord">(x, y+1)</span>
+            </div>
+            <div class="matrix-cell is-neighbor">
+              <span>1/8 (0.125)</span>
+              <span class="matrix-coord">(x+1, y+1)</span>
+            </div>
+            <div class="matrix-cell is-empty">
+              <span>0</span>
+              <span class="matrix-coord">(x+2, y+1)</span>
+            </div>
+
+            <div class="matrix-cell is-empty">
+              <span>0</span>
+              <span class="matrix-coord">(x-1, y+2)</span>
+            </div>
+            <div class="matrix-cell is-neighbor">
+              <span>1/8 (0.125)</span>
+              <span class="matrix-coord">(x, y+2)</span>
+            </div>
+            <div class="matrix-cell is-empty">
+              <span>0</span>
+              <span class="matrix-coord">(x+1, y+2)</span>
+            </div>
+            <div class="matrix-cell is-empty">
+              <span>2/8 LOCAL</span>
+              <span class="matrix-coord">25% ABSORB</span>
+            </div>
+          </div>
+
+          <div class="hero-mandate-callout">
+            <strong>MATHEMATICAL INVARIANT:</strong> 6 neighbors × 0.125 = <strong>0.75 (75.0% propagated)</strong> | <strong>0.25 (25.0% absorbed)</strong>. Zero integer bit-shift truncation error via IEEE-754 Float32 ring buffer.
+          </div>
+        </div>
+
+        <div class="forge-panel">
+          <div class="forge-form-row">
+            <label for="select-dither-kernel">
+              <span>QUANTIZATION KERNEL [K]</span>
+              <span id="label-active-kernel">atkinson-1bit</span>
+            </label>
+            <select id="select-dither-kernel" class="tactical-select">
+              <option value="atkinson-1bit" selected>ATKINSON 1-BIT [6×1/8 — 75.0% PROPAGATION]</option>
+              <option value="atkinson-2bit">ATKINSON 2-BIT [4-TONE — 75.0% PROPAGATION]</option>
+              <option value="floyd-steinberg">FLOYD-STEINBERG [4-NEIGHBOR 16/16 — 100% PROPAGATION]</option>
+              <option value="bayer-8x8">ORDERED BAYER 8×8 [64-CELL CROSS-HATCH MATRIX]</option>
+            </select>
+          </div>
+
+          <div class="forge-form-row">
+            <label for="select-dither-palette">
+              <span>HERALDIC DITHER PALETTE [1–4]</span>
+              <span id="label-active-palette">obsidian-bone</span>
+            </label>
+            <select id="select-dither-palette" class="tactical-select">
+              <option value="obsidian-bone" selected>1. OBSIDIAN &amp; BONE (#0A0B0E / #F4F1EA / #E63946)</option>
+              <option value="crimson-herald">2. CRIMSON HERALD (#0B0708 / #FFF8F0 / #F59E0B)</option>
+              <option value="phosphor-hud">3. PHOSPHOR HUD (#050C08 / #D1FAE5 / #34D399)</option>
+              <option value="cobalt-aegis">4. COBALT AEGIS (#070B14 / #F1F5F9 / #38BDF8)</option>
+            </select>
+          </div>
+
+          <div class="forge-form-row">
+            <label for="slider-dither-threshold">
+              <span>QUANTIZATION THRESHOLD (τ)</span>
+              <strong id="val-dither-threshold">128</strong>
+            </label>
+            <input type="range" id="slider-dither-threshold" min="1" max="254" step="1" value="128" />
+          </div>
+
+          <div class="forge-form-row">
+            <label for="select-pixel-scale">
+              <span>OPTICAL PIXEL SCALE</span>
+              <span id="val-pixel-scale">1x</span>
+            </label>
+            <select id="select-pixel-scale" class="tactical-select">
+              <option value="1" selected>1× NATIVE CRISP MATRIX (320×240)</option>
+              <option value="2">2× MACINTOSH COARSE BLOCK STIPPLE</option>
+              <option value="3">3× MONUMENTAL WOODCUT RELIEF</option>
+            </select>
+          </div>
+
+          <div class="forge-form-row">
+            <label for="input-upload-image">
+              <span>CUSTOM PORTRAIT / ARMOR IMAGE DITHER UPLOAD (CLIENT-SIDE ONLY)</span>
+            </label>
+            <input type="file" id="input-upload-image" class="tactical-file-input" accept="image/*" />
+            <div class="button-cluster">
+              <button type="button" id="btn-restore-procedural" class="tactical-btn">RESTORE PROCEDURAL KNIGHT MONUMENT</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION IV: FOUR CHIVALRIC ORDERS & READINESS GAUNTLET (#section-knight-orders)
+         ======================================================================== -->
+    <section id="section-knight-orders" class="cathedral-section" aria-labelledby="knight-orders-heading">
+      <div class="section-filigree-corners" data-filigree-target="orders" aria-hidden="true"></div>
+
+      <div class="section-header-block">
+        <div class="section-header-top">
+          <span class="hud-kicker">SECTOR IV // FOUR CHIVALRIC ORDERS OF NOVEMBER III &amp; READINESS GAUNTLET</span>
+          <span class="hud-pill" id="hud-aegis-rank">RANK: <strong>SCOUT OF THE PRECINCT (ORDER I)</strong></span>
+        </div>
+        <h2 id="knight-orders-heading" class="chivalric-section-title">
+          THE FOUR CHIVALRIC ORDERS OF THE BALLOT &amp; 5-STEP ELECTION DAY READINESS GAUNTLET
+        </h2>
+        <p class="civic-prose">
+          Each Chivalric Order guards a vital pillar of the November 3 democratic process. Complete all five steps of the Election Day Readiness Gauntlet below to advance your tactical standing to Sovereign Champion of November III.
+        </p>
+      </div>
+
+      <div class="knight-orders-grid" role="region" aria-label="Four Chivalric Knight Orders">
+        <article class="knight-order-card" data-order-card="order-1-recon">
+          <div class="order-card-header">
+            <div>
+              <span class="hud-kicker">ORDER I // RECON_ROLL_01</span>
+              <h3 class="order-title">Sir Vance of the Roll</h3>
+              <span class="order-motto">"PRECINCT LOCATED, ROLL CONFIRMED"</span>
+            </div>
+            <div class="order-shield-slot" data-shield-order="order-1-recon"></div>
+          </div>
+          <div class="order-canvas-wrap">
+            <canvas id="canvas-order-1" class="dither-canvas" width="240" height="180" data-scene="order-1-recon" aria-label="Order I: Sir Vance of the Roll dithered portrait"></canvas>
+          </div>
+          <p class="order-lore">
+            <strong>Vanguard of Precinct Reconnaissance:</strong> Verify voter registration status and confirm your assigned November 3 polling place and hours before departing.
+          </p>
+        </article>
+
+        <article class="knight-order-card" data-order-card="order-2-warrant">
+          <div class="order-card-header">
+            <div>
+              <span class="hud-kicker">ORDER II // WARRANT_JUSTICE_02</span>
+              <h3 class="order-title">Dame Astraea of the Warrant</h3>
+              <span class="order-motto">"EVERY MEASURE WEIGHED IN TRUTH"</span>
+            </div>
+            <div class="order-shield-slot" data-shield-order="order-2-warrant"></div>
+          </div>
+          <div class="order-canvas-wrap">
+            <canvas id="canvas-order-2" class="dither-canvas" width="240" height="180" data-scene="order-2-warrant" aria-label="Order II: Dame Astraea of the Warrant dithered portrait"></canvas>
+          </div>
+          <p class="order-lore">
+            <strong>Justiciar of the Sample Warrant:</strong> Inspect federal, state, and municipal ballot propositions and prepare your required voter identification credentials.
+          </p>
+        </article>
+
+        <article class="knight-order-card" data-order-card="order-3-queue">
+          <div class="order-card-header">
+            <div>
+              <span class="hud-kicker">ORDER III // QUEUE_BASTION_03</span>
+              <h3 class="order-title">Sir Percival of the Queue</h3>
+              <span class="order-motto">"IN LINE BEFORE CLOSE, NONE SHALL YIELD"</span>
+            </div>
+            <div class="order-shield-slot" data-shield-order="order-3-queue"></div>
+          </div>
+          <div class="order-canvas-wrap">
+            <canvas id="canvas-order-3" class="dither-canvas" width="240" height="180" data-scene="order-3-queue" aria-label="Order III: Sir Percival of the Queue dithered portrait"></canvas>
+          </div>
+          <p class="order-lore">
+            <strong>Sentinel of the Polling Queue:</strong> Uphold the statutory right to remain in queue if standing in line before local polls close on Tuesday, November 3.
+          </p>
+        </article>
+
+        <article class="knight-order-card" data-order-card="order-4-champion">
+          <div class="order-card-header">
+            <div>
+              <span class="hud-kicker">ORDER IV // SOVEREIGN_AEGIS_04</span>
+              <h3 class="order-title">Sovereign Champion of November III</h3>
+              <span class="order-motto">"THE BALLOT CAST, THE COVENANT SEALED"</span>
+            </div>
+            <div class="order-shield-slot" data-shield-order="order-4-champion"></div>
+          </div>
+          <div class="order-canvas-wrap">
+            <canvas id="canvas-order-4" class="dither-canvas" width="240" height="180" data-scene="order-4-champion" aria-label="Order IV: Sovereign Champion of November III dithered portrait"></canvas>
+          </div>
+          <p class="order-lore">
+            <strong>High Guardian of the Cast Seal:</strong> Deliver your completed ballot into the precinct tabulator or official drop box and mint your heraldic November 3 crest.
+          </p>
+        </article>
+      </div>
+
+      <div class="gauntlet-container" role="region" aria-label="5-Step Election Day Readiness Gauntlet">
+        <div class="gauntlet-status-header">
+          <div>
+            <span class="hud-kicker">INTERACTIVE 5-STEP ELECTION DAY READINESS GAUNTLET</span>
+            <h3 class="contest-title">COMPLETE ALL 5 TACTICAL CHECKPOINTS FOR NOVEMBER 3, 2026</h3>
+          </div>
+          <span class="hud-pill" id="hud-readiness-progress">GAUNTLET PROGRESS: <strong>1 / 5 (20%)</strong></span>
+        </div>
+
+        <div class="gauntlet-progress-bar" aria-hidden="true">
+          <div id="gauntlet-progress-fill" class="gauntlet-progress-fill" style="width: 20%;"></div>
+        </div>
+
+        <ul id="readiness-gauntlet-list" class="gauntlet-steps-list">
+          <li class="gauntlet-step-item is-completed" data-step-id="step-1">
+            <input type="checkbox" class="gauntlet-checkbox" id="chk-step-1" data-step-id="step-1" checked />
+            <label for="chk-step-1" class="gauntlet-step-body">
+              <span class="hud-kicker">STEP 01 // GAUNTLET_PRECINCT_LOCK // ORDER I</span>
+              <span class="gauntlet-step-title">Confirm Assigned November 3 Polling Place &amp; Operating Hours</span>
+              <span class="gauntlet-step-desc">Verify your exact precinct address, room location, and local poll-closing time (19:00 or 20:00 local) before departing.</span>
+            </label>
+          </li>
+
+          <li class="gauntlet-step-item" data-step-id="step-2">
+            <input type="checkbox" class="gauntlet-checkbox" id="chk-step-2" data-step-id="step-2" />
+            <label for="chk-step-2" class="gauntlet-step-body">
+              <span class="hud-kicker">STEP 02 // GAUNTLET_CREDENTIAL_CHECK // ORDER II</span>
+              <span class="gauntlet-step-title">Pack Acceptable Voter Identification or Registration Confirmation</span>
+              <span class="gauntlet-step-desc">Check your state's Election Day ID requirements and place your valid photo ID or utility/registration document in your kit.</span>
+            </label>
+          </li>
+
+          <li class="gauntlet-step-item" data-step-id="step-3">
+            <input type="checkbox" class="gauntlet-checkbox" id="chk-step-3" data-step-id="step-3" />
+            <label for="chk-step-3" class="gauntlet-step-body">
+              <span class="hud-kicker">STEP 03 // GAUNTLET_BALLOT_WARRANT // ORDER II</span>
+              <span class="gauntlet-step-title">Lock Sample Ballot Selections &amp; Written Reference Notes</span>
+              <span class="gauntlet-step-desc">Review all federal, state, judicial, and municipal ballot measures in the Sample Ballot simulator below so you can vote swiftly.</span>
+            </label>
+          </li>
+
+          <li class="gauntlet-step-item" data-step-id="step-4">
+            <input type="checkbox" class="gauntlet-checkbox" id="chk-step-4" data-step-id="step-4" />
+            <label for="chk-step-4" class="gauntlet-step-body">
+              <span class="hud-kicker">STEP 04 // GAUNTLET_TRANSIT_WINDOW // ORDER III</span>
+              <span class="gauntlet-step-title">Commit Arrival Window &amp; Queue Protection Plan</span>
+              <span class="gauntlet-step-desc">Schedule your transit window and save 866-OUR-VOTE in your phone. Remember: if you are in line before close, stay in line.</span>
+            </label>
+          </li>
+
+          <li class="gauntlet-step-item" data-step-id="step-5">
+            <input type="checkbox" class="gauntlet-checkbox" id="chk-step-5" data-step-id="step-5" />
+            <label for="chk-step-5" class="gauntlet-step-body">
+              <span class="hud-kicker">STEP 05 // GAUNTLET_CAST_SEAL // ORDER IV</span>
+              <span class="gauntlet-step-title">Cast Ballot or Deliver Official Drop-Box Envelope &amp; Mint Seal</span>
+              <span class="gauntlet-step-desc">Verify your paper or optical-scan ballot is accepted at the precinct tabulator, or deliver your signed mail ballot to an official drop box before close.</span>
+            </label>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION V: SAMPLE BALLOT CONTEMPLATION MATRIX (#section-ballot-simulator)
+         ======================================================================== -->
+    <section id="section-ballot-simulator" class="cathedral-section" aria-labelledby="ballot-sim-heading">
+      <div class="section-filigree-corners" data-filigree-target="ballot" aria-hidden="true"></div>
+
+      <div class="section-header-block">
+        <div class="section-header-top">
+          <span class="hud-kicker">SECTOR V // NONPARTISAN SAMPLE BALLOT CONTEMPLATION MATRIX</span>
+          <span class="hud-pill">CONTESTS LOCKED: <strong id="hud-ballot-count-badge">0 / 6</strong></span>
+        </div>
+        <h2 id="ballot-sim-heading" class="chivalric-section-title">
+          NOVEMBER 3, 2026 SAMPLE BALLOT &amp; CIVIC PROPOSITION WORKBENCH
+        </h2>
+        <p class="civic-prose">
+          Deliberate on six representative Federal, State, and Municipal Election Day contests and ballot propositions. Selections persist locally in your deterministic FNV-1a checksum store so you can export a reference sheet for the voting booth.
+        </p>
+      </div>
+
+      <div id="ballot-contests-grid" class="ballot-contests-grid">
+        <article class="ballot-contest-card" data-contest-card="contest-1">
+          <div>
+            <div class="contest-meta-row">
+              <span>FEDERAL // CONTEST_01</span>
+              <span data-contest-status="contest-1">CHOICE: UNDECIDED</span>
+            </div>
+            <h3 class="contest-title">U.S. House of Representatives — Congressional District</h3>
+            <p class="contest-summary">Two-year federal legislative term representing district constituents on national appropriations, infrastructure, and oversight.</p>
+          </div>
+          <div class="contest-fiscal">TERM: 119th/120th Congress (2 Years) // Nonpartisan Reference Simulation</div>
+          <div class="contest-options-row" role="group" aria-label="Contest 1 Options">
+            <button type="button" class="tactical-btn" data-contest-id="contest-1" data-option="CANDIDATE A">CANDIDATE A</button>
+            <button type="button" class="tactical-btn" data-contest-id="contest-1" data-option="CANDIDATE B">CANDIDATE B</button>
+            <button type="button" class="tactical-btn is-active" data-contest-id="contest-1" data-option="UNDECIDED">UNDECIDED</button>
+          </div>
+        </article>
+
+        <article class="ballot-contest-card" data-contest-card="contest-2">
+          <div>
+            <div class="contest-meta-row">
+              <span>STATE // CONTEST_02</span>
+              <span data-contest-status="contest-2">CHOICE: UNDECIDED</span>
+            </div>
+            <h3 class="contest-title">State Executive &amp; Chief Election Officer Mandate</h3>
+            <p class="contest-summary">Four-year state executive term overseeing statewide election administration, public education funding, and emergency preparedness.</p>
+          </div>
+          <div class="contest-fiscal">IMPACT: Administers State General Fund &amp; Statutory Election Certification</div>
+          <div class="contest-options-row" role="group" aria-label="Contest 2 Options">
+            <button type="button" class="tactical-btn" data-contest-id="contest-2" data-option="CANDIDATE A">CANDIDATE A</button>
+            <button type="button" class="tactical-btn" data-contest-id="contest-2" data-option="CANDIDATE B">CANDIDATE B</button>
+            <button type="button" class="tactical-btn is-active" data-contest-id="contest-2" data-option="UNDECIDED">UNDECIDED</button>
+          </div>
+        </article>
+
+        <article class="ballot-contest-card" data-contest-card="contest-3">
+          <div>
+            <div class="contest-meta-row">
+              <span>MUNICIPAL CHARTER // CONTEST_03</span>
+              <span data-contest-status="contest-3">CHOICE: UNDECIDED</span>
+            </div>
+            <h3 class="contest-title">Proposition A: Municipal Precinct Access &amp; Evening Hours Charter</h3>
+            <p class="contest-summary">Establishes guaranteed minimum voting machine ratios per precinct and funds extended Election Day transit shuttles.</p>
+          </div>
+          <div class="contest-fiscal">FISCAL IMPACT: $4.2M annual municipal allocation from existing administrative reserves</div>
+          <div class="contest-options-row" role="group" aria-label="Contest 3 Options">
+            <button type="button" class="tactical-btn" data-contest-id="contest-3" data-option="FOR">FOR</button>
+            <button type="button" class="tactical-btn" data-contest-id="contest-3" data-option="AGAINST">AGAINST</button>
+            <button type="button" class="tactical-btn is-active" data-contest-id="contest-3" data-option="UNDECIDED">UNDECIDED</button>
+          </div>
+        </article>
+
+        <article class="ballot-contest-card" data-contest-card="contest-4">
+          <div>
+            <div class="contest-meta-row">
+              <span>INFRASTRUCTURE BOND // CONTEST_04</span>
+              <span data-contest-status="contest-4">CHOICE: UNDECIDED</span>
+            </div>
+            <h3 class="contest-title">Measure B: Clean Water, Grid Resilience &amp; Bridge Seismic Bond</h3>
+            <p class="contest-summary">Authorizes general obligation bonds to upgrade municipal water mains, microgrid backup power for polling centers, and bridge spans.</p>
+          </div>
+          <div class="contest-fiscal">FISCAL IMPACT: $180M 20-year bond; estimated $14/year per median assessed parcel</div>
+          <div class="contest-options-row" role="group" aria-label="Contest 4 Options">
+            <button type="button" class="tactical-btn" data-contest-id="contest-4" data-option="FOR">FOR</button>
+            <button type="button" class="tactical-btn" data-contest-id="contest-4" data-option="AGAINST">AGAINST</button>
+            <button type="button" class="tactical-btn is-active" data-contest-id="contest-4" data-option="UNDECIDED">UNDECIDED</button>
+          </div>
+        </article>
+
+        <article class="ballot-contest-card" data-contest-card="contest-5">
+          <div>
+            <div class="contest-meta-row">
+              <span>CIVIC DATA &amp; AI // CONTEST_05</span>
+              <span data-contest-status="contest-5">CHOICE: UNDECIDED</span>
+            </div>
+            <h3 class="contest-title">Initiative 14: Public Algorithmic Transparency &amp; Paper-Trail Audit Act</h3>
+            <p class="contest-summary">Mandates open-source inspection of municipal automated decision systems and 100% voter-verified paper audit trails.</p>
+          </div>
+          <div class="contest-fiscal">FISCAL IMPACT: $1.1M one-time compliance audit; zero new tax rate increase</div>
+          <div class="contest-options-row" role="group" aria-label="Contest 5 Options">
+            <button type="button" class="tactical-btn" data-contest-id="contest-5" data-option="FOR">FOR</button>
+            <button type="button" class="tactical-btn" data-contest-id="contest-5" data-option="AGAINST">AGAINST</button>
+            <button type="button" class="tactical-btn is-active" data-contest-id="contest-5" data-option="UNDECIDED">UNDECIDED</button>
+          </div>
+        </article>
+
+        <article class="ballot-contest-card" data-contest-card="contest-6">
+          <div>
+            <div class="contest-meta-row">
+              <span>LIBRARY &amp; SCHOOLS // CONTEST_06</span>
+              <span data-contest-status="contest-6">CHOICE: UNDECIDED</span>
+            </div>
+            <h3 class="contest-title">Measure L: Public Library Evening Hours &amp; Civic Literacy Renewal</h3>
+            <p class="contest-summary">Renews expiring local funding for neighborhood branch libraries, weekend study halls, and nonpartisan voter information guides.</p>
+          </div>
+          <div class="contest-fiscal">FISCAL IMPACT: Renews existing $0.025 per $100 assessed valuation for 8 years</div>
+          <div class="contest-options-row" role="group" aria-label="Contest 6 Options">
+            <button type="button" class="tactical-btn" data-contest-id="contest-6" data-option="FOR">FOR</button>
+            <button type="button" class="tactical-btn" data-contest-id="contest-6" data-option="AGAINST">AGAINST</button>
+            <button type="button" class="tactical-btn is-active" data-contest-id="contest-6" data-option="UNDECIDED">UNDECIDED</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="ballot-export-panel">
+        <div class="ballot-export-actions">
+          <span class="control-group-label">DETERMINISTIC FNV-1A BALLOT PLAN SNAPSHOT</span>
+          <div class="button-cluster">
+            <button type="button" id="btn-export-ballot" class="tactical-btn btn-primary">EXPORT BALLOT SUMMARY JSON</button>
+            <button type="button" id="btn-reset-store" class="tactical-btn btn-secondary">RESET TACTICAL STATE</button>
+          </div>
+        </div>
+        <pre id="ballot-export-output" aria-live="polite">{"electionDate":"2026-11-03","status":"READY_FOR_BOOTH_INSPECTION","note":"Select ballot options above or click EXPORT BALLOT SUMMARY JSON to inspect your deterministic FNV-1a signed snapshot."}</pre>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION VI: "I VOTED — NOV 3" DITHERED CREST STUDIO (#section-voted-crest)
+         ======================================================================== -->
+    <section id="section-voted-crest" class="cathedral-section" aria-labelledby="voted-crest-heading">
+      <div class="section-filigree-corners" data-filigree-target="crest" aria-hidden="true"></div>
+
+      <div class="section-header-block">
+        <div class="section-header-top">
+          <span class="hud-kicker">SECTOR VI // HERALDIC CIVIC SEAL &amp; PNG EXPORT STUDIO</span>
+          <span class="hud-pill" id="hud-crest-seal-status">SEAL STATUS: <strong>READY TO MINT</strong></span>
+        </div>
+        <h2 id="voted-crest-heading" class="chivalric-section-title">
+          MINT &amp; DOWNLOAD YOUR DITHERED "I VOTED — NOVEMBER 3, 2026" KNIGHTLY CREST
+        </h2>
+        <p class="civic-prose">
+          Synthesize a personalized 360×360 Bill Atkinson error-diffusion heraldic badge embossed with your custom Precinct Callsign, chosen Chivalric Order, and November 3, 2026 timestamp. Exportable immediately as a crisp 1-bit or 2-bit PNG.
+        </p>
+      </div>
+
+      <div class="voted-crest-grid">
+        <div class="crest-controls-panel">
+          <div class="forge-form-row">
+            <label for="input-crest-callsign">
+              <span>VOTER CALLSIGN / PRECINCT MOTTO (MAX 28 CHARS)</span>
+            </label>
+            <input type="text" id="input-crest-callsign" class="tactical-input" maxlength="28" value="KNIGHT OF PRECINCT 04" />
+          </div>
+
+          <div class="forge-form-row">
+            <label for="select-crest-order">
+              <span>CHIVALRIC ORDER ARCHETYPE</span>
+            </label>
+            <select id="select-crest-order" class="tactical-select">
+              <option value="order-1-recon">ORDER I — SIR VANCE OF THE ROLL (RECONNAISSANCE)</option>
+              <option value="order-2-warrant">ORDER II — DAME ASTRAEA OF THE WARRANT (JUSTICE)</option>
+              <option value="order-3-queue">ORDER III — SIR PERCIVAL OF THE QUEUE (SENTINEL)</option>
+              <option value="order-4-champion" selected>ORDER IV — SOVEREIGN CHAMPION OF NOVEMBER III</option>
+            </select>
+          </div>
+
+          <div class="button-cluster">
+            <button type="button" id="btn-mint-crest" class="tactical-btn btn-primary">
+              [V] MINT CIVIC SEAL — NOV 3, 2026
+            </button>
+            <button type="button" id="btn-download-crest" class="tactical-btn btn-secondary">
+              DOWNLOAD DITHERED PNG (nov3-i-voted-crest.png)
+            </button>
+          </div>
+
+          <div class="hero-mandate-callout" id="crest-mint-telemetry">
+            <strong>HERALDIC BITMAP ENGRAVER:</strong> Renders 5×7 embedded pixel-typography, Gothic heater shield geometry, and plumed great-helm directly through the Float32 Bill Atkinson 1/8 error-diffusion pipeline.
+          </div>
+        </div>
+
+        <div class="crest-preview-panel">
+          <canvas id="canvas-voted-crest" class="dither-canvas" width="360" height="360" aria-label="Dithered I Voted November 3 2026 Heraldic Crest Canvas"></canvas>
+          <div id="crest-status-readout" class="crest-status-readout">
+            SEAL: I VOTED // NOVEMBER 3, 2026 // KNIGHT OF PRECINCT 04
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       PORTAL FOOTER
+       ========================================================================== -->
+  <footer class="portal-footer" role="contentinfo">
+    <span>ORDER OF THE CIVIC AEGIS // GENERAL ELECTION DAY — TUESDAY, NOVEMBER 3, 2026</span>
+    <span>ZERO EXTERNAL DEPENDENCIES • AUTHENTIC 6×1/8 BILL ATKINSON DITHERPUNK • NONPARTISAN VOTER RESOURCE</span>
+  </footer>
+
+  <!-- ==========================================================================
+       ISOMORPHIC ES2024 APPLICATION BOOTSTRAP
+       ========================================================================== -->
+  <script type="module">
+    import { initHudController } from './src/hud_controller.mjs';
+    import { createCivicStore, DEFAULT_ELECTION_DATASET } from './src/civic_store.mjs';
+    import * as ditherEngine from './src/atkinson_dither_engine.mjs';
+    import * as knightHeraldry from './src/knight_heraldry.mjs';
+
+    async function bootstrapPortal() {
+      let dataset = DEFAULT_ELECTION_DATASET;
+      try {
+        const res = await fetch('./data/election_nov3_dataset.json');
+        if (res.ok) {
+          dataset = await res.json();
+        }
+      } catch (_err) {
+        dataset = DEFAULT_ELECTION_DATASET;
+      }
+
+      const store = createCivicStore({}, { dataset });
+      window.__CIVIC_AEGIS_APP__ = initHudController({
+        rootElement: document.getElementById('app-root') || document.body,
+        rootDocument: document,
+        store,
+        ditherEngine,
+        knightHeraldry,
+        dataset
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bootstrapPortal, { once: true });
+    } else {
+      bootstrapPortal();
+    }
+  </script>
+</body>
+</html>
