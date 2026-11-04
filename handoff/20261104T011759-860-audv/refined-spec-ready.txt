@@ -1,0 +1,16 @@
+# Stage 1 Discovery & Refined Specification Handoff
+
+**Run ID:** `20261104T011759-860-audv`  
+**Agent:** `plan-1`  
+**Governed By:** `LANGUAGE.md`
+
+## Artifacts Ready for Stage 2 Planning:
+1. `functional_specification_001.md`: Original seed functional and mathematical specification.
+2. `wayfinder/20261104T011759-860-audv/refined-specification.md`: Refined technical specification synthesized from all 5 discovery scanner findings (`codebase-mapper`, `api-schema-mapper`, `mcp-provisioner`, `library-installer`, `function-mapper`).
+
+## Supporting Discovery Documents in Wayfinder:
+- `wayfinder/20261104T011759-860-audv/codebase-map.md` (Track partitioning & file ownership map)
+- `wayfinder/20261104T011759-860-audv/api-schemas.md` (Dataset & cross-module payload schemas)
+- `wayfinder/20261104T011759-860-audv/library-functions.md` (Module function signatures & V8 benchmark)
+- `wayfinder/20261104T011759-860-audv/mcp-tools.md` (Playwright MCP invocation schemas)
+- `wayfinder/20261104T011759-860-audv/api-schema-mapper-election-nov3-schema.json` (JSON schema)

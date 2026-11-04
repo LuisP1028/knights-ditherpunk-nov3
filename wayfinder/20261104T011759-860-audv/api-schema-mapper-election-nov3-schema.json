@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "KnightsDitherpunkNov3Schemas",
+  "description": "Authoritative payload and dataset schemas for the Ornate Chivalric Knights + Bill Atkinson Ditherpunk + Modern Tactical HUD Election Day Portal (Tuesday, November 3, 2026).",
+  "runtimeNetworkPolicy": {
+    "externalRuntimeApis": 0,
+    "externalCdnScripts": 0,
+    "offlineCapable": true,
+    "localDatasetPath": "./data/election_nov3_dataset.json",
+    "localStorageKey": "knights_ditherpunk_nov3_v1"
+  },
+  "datasetSample": {
+    "schemaVersion": "1.0.0",
+    "electionDate": "2026-11-03",
+    "electionTitle": "General Election Day — Tuesday, November 3, 2026",
+    "portalBanner": "ORDER OF THE CIVIC AEGIS // NOVEMBER III BALLOT COMMAND",
+    "inLineVotingMandate": "If you are in line before polls close on November 3, stay in line—your right to cast a ballot is protected by law.",
+    "pollClosingZones": [
+      {
+        "zoneId": "EST",
+        "label": "Eastern Standard Time (UTC-5)",
+        "utcOffset": "UTC-05:00",
+        "utcOffsetHours": -5,
+        "primaryClosingLocalTime": "19:00",
+        "secondaryClosingLocalTime": "20:00",
+        "closingIsoUtc": "2026-11-04T01:00:00Z",
+        "earliestClosingIsoUtc": "2026-11-04T00:00:00Z",
+        "representativeStates": ["NY", "PA", "GA", "MI", "NC", "OH", "VA", "FL", "MA"],
+        "inLineProtectionRule": "Voters in queue by 19:00/20:00 EST local closing time are legally entitled to cast a ballot."
+      },
+      {
+        "zoneId": "CST",
+        "label": "Central Standard Time (UTC-6)",
+        "utcOffset": "UTC-06:00",
+        "utcOffsetHours": -6,
+        "primaryClosingLocalTime": "19:00",
+        "secondaryClosingLocalTime": "20:00",
+        "closingIsoUtc": "2026-11-04T02:00:00Z",
+        "earliestClosingIsoUtc": "2026-11-04T01:00:00Z",
+        "representativeStates": ["IL", "TX", "WI", "MN", "MO", "LA", "AL", "TN"],
+        "inLineProtectionRule": "Voters in queue by 19:00/20:00 CST local closing time are legally entitled to cast a ballot."
+      },
+      {
+        "zoneId": "MST",
+        "label": "Mountain Standard Time (UTC-7)",
+        "utcOffset": "UTC-07:00",
+        "utcOffsetHours": -7,
+        "primaryClosingLocalTime": "19:00",
+        "secondaryClosingLocalTime": "20:00",
+        "closingIsoUtc": "2026-11-04T03:00:00Z",
+        "earliestClosingIsoUtc": "2026-11-04T02:00:00Z",
+        "representativeStates": ["CO", "AZ", "NM", "UT", "MT", "ID", "WY"],
+        "inLineProtectionRule": "Voters in queue by 19:00/20:00 MST local closing time are legally entitled to cast a ballot."
+      },
+      {
+        "zoneId": "PST",
+        "label": "Pacific Standard Time (UTC-8)",
+        "utcOffset": "UTC-08:00",
+        "utcOffsetHours": -8,
+        "primaryClosingLocalTime": "20:00",
+        "secondaryClosingLocalTime": "20:00",
+        "closingIsoUtc": "2026-11-04T04:00:00Z",
+        "earliestClosingIsoUtc": "2026-11-04T04:00:00Z",
+        "representativeStates": ["CA", "WA", "OR", "NV"],
+        "inLineProtectionRule": "Voters in queue by 20:00 PST local closing time are legally entitled to cast a ballot."
+      },
+      {
+        "zoneId": "AKST",
+        "label": "Alaska Standard Time (UTC-9)",
+        "utcOffset": "UTC-09:00",
+        "utcOffsetHours": -9,
+        "primaryClosingLocalTime": "20:00",
+        "secondaryClosingLocalTime": "20:00",
+        "closingIsoUtc": "2026-11-04T05:00:00Z",
+        "earliestClosingIsoUtc": "2026-11-04T05:00:00Z",
+        "representativeStates": ["AK"],
+        "inLineProtectionRule": "Voters in queue by 20:00 AKST local closing time are legally entitled to cast a ballot."
+      },
+      {
+        "zoneId": "HST",
+        "label": "Hawaii-Aleutian Standard Time (UTC-10)",
+        "utcOffset": "UTC-10:00",
+        "utcOffsetHours": -10,
+        "primaryClosingLocalTime": "19:00",
+        "secondaryClosingLocalTime": "19:00",
+        "closingIsoUtc": "2026-11-04T05:00:00Z",
+        "earliestClosingIsoUtc": "2026-11-04T05:00:00Z",
+        "representativeStates": ["HI"],
+        "inLineProtectionRule": "Voters in queue by 19:00 HST local closing time are legally entitled to cast a ballot."
+      }
+    ],
+    "knightOrders": [
+      {
+        "orderId": "order-1-recon",
+        "romanNumeral": "I",
+        "name": "Sir Vance of the Roll",
+        "title": "Order I — Sir Vance of the Roll (Precinct & Registration Recon)",
+        "motto": "VERIFY THE ROLL // LOCK THE PRECINCT",
+        "sceneId": "order-1-recon",
+        "armorNotes": "Hounskull bascinet helm with articulated bevors, fluted reconnaissance pauldrons, and illuminated precinct scroll.",
+        "hudDesignation": "RECON_UNIT_01 // ROLL_VERIFIER",
+        "civicMission": "Verify active voter registration, confirm assigned November 3 polling place, and inspect precinct opening hours."
+      },
+      {
+        "orderId": "order-2-warrant",
+        "romanNumeral": "II",
+        "name": "Dame Astraea of the Warrant",
+        "title": "Order II — Dame Astraea of the Warrant (Ballot & Proposition Contemplation)",
+        "motto": "WEIGH THE MEASURE // WIELD THE WARRANT",
+        "sceneId": "order-2-warrant",
+        "armorNotes": "Gothic Milanese plate cuirass with balanced civic scales and twin-fullered broadsword of equilibrium.",
+        "hudDesignation": "JUSTICIAR_02 // BALLOT_MATRIX",
+        "civicMission": "Contemplate nonpartisan sample ballot offices and civic propositions, locking deliberate choices prior to entering the booth."
+      },
+      {
+        "orderId": "order-3-queue",
+        "romanNumeral": "III",
+        "name": "Sir Percival of the Queue",
+        "title": "Order III — Sir Percival of the Queue (Line Steadfastness & Voter Protection)",
+        "motto": "HOLD THE LINE // GUARD THE FRANCHISE",
+        "sceneId": "order-3-queue",
+        "armorNotes": "Heavy siege great-helm and fortress pavise tower shield engraved with the statutory In-Line Voting Right Mandate.",
+        "hudDesignation": "SENTINEL_03 // QUEUE_PROTECTION",
+        "civicMission": "Stand fast in queue before poll closing and uphold statutory voter rights, provisional ballot rules, and hotline access."
+      },
+      {
+        "orderId": "order-4-champion",
+        "romanNumeral": "IV",
+        "name": "Sovereign Champion of November III",
+        "title": "Order IV — Sovereign Champion of November III (Cast Seal & Civic Crest Minting)",
+        "motto": "SEAL CAST // AEGIS ETERNAL",
+        "sceneId": "order-4-champion",
+        "armorNotes": "Crowned Maximilian fluted full plate with radiant sun-crest rondels and the sealed November III civic standard.",
+        "hudDesignation": "CHAMPION_04 // SEAL_MINT_STUDIO",
+        "civicMission": "Cast the November 3 ballot and mint a verifiable Bill-Atkinson-dithered 'I VOTED — NOV 3, 2026' heraldic crest."
+      }
+    ]
+  }
+}
