@@ -1091,23 +1091,27 @@ export function renderVotedCrestToCanvas(canvas, config = {}, ditherEngine = nul
   }
 
   let dataUrl = '';
-  if (canvas && typeof canvas.getContext === 'function') {
-    const ctx = canvas.getContext('2d');
-    if (ctx) {
-      if (typeof ctx.createImageData === 'function' && typeof ctx.putImageData === 'function') {
-        const imgData = ctx.createImageData(width, height);
-        imgData.data.set(rgba);
-        ctx.putImageData(imgData, 0, 0);
-      } else if (typeof ImageData !== 'undefined' && typeof ctx.putImageData === 'function') {
-        const imgData = new ImageData(new Uint8ClampedArray(rgba), width, height);
-        ctx.putImageData(imgData, 0, 0);
+  if (canvas && typeof canvas === 'object') {
+    if (canvas.width !== width) canvas.width = width;
+    if (canvas.height !== height) canvas.height = height;
+    if (typeof canvas.getContext === 'function') {
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        if (typeof ctx.createImageData === 'function' && typeof ctx.putImageData === 'function') {
+          const imgData = ctx.createImageData(width, height);
+          imgData.data.set(rgba);
+          ctx.putImageData(imgData, 0, 0);
+        } else if (typeof ImageData !== 'undefined' && typeof ctx.putImageData === 'function') {
+          const imgData = new ImageData(new Uint8ClampedArray(rgba), width, height);
+          ctx.putImageData(imgData, 0, 0);
+        }
       }
-    }
-    if (typeof canvas.toDataURL === 'function') {
-      try {
-        dataUrl = canvas.toDataURL('image/png');
-      } catch {
-        dataUrl = '';
+      if (typeof canvas.toDataURL === 'function') {
+        try {
+          dataUrl = canvas.toDataURL('image/png');
+        } catch {
+          dataUrl = '';
+        }
       }
     }
   }
@@ -1132,7 +1136,8 @@ export function renderVotedCrestToCanvas(canvas, config = {}, ditherEngine = nul
 
   if (canvas && typeof canvas === 'object') {
     canvas.lastRenderResult = result;
-    return Object.assign(canvas, result);
+    const { width: _w, height: _h, ...meta } = result;
+    return Object.assign(canvas, meta);
   }
   return result;
 }
